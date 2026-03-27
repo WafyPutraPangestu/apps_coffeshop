@@ -1,11 +1,2451 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+/* =====================================================
+   WARSO COFFEE — STREET DROP THEME
+   Vibe: Urban / Skate / Grafiti / Raw
+   Tech: Laravel 13 + Livewire 4 + Tailwind CSS v4
+   ===================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* ---- Typography ---- */
+    --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Bebas Neue", "Arial Black", sans-serif;
+    --font-mono: "IBM Plex Mono", "Courier New", monospace;
+
+    /* ---- Base — Concrete & Ink ---- */
+    /* ============================================================
+   DESIGN TOKENS — Street / Graffiti Dark-First Design System
+   ============================================================ */
+
+    /* ── Ink Scale (Neutral) — default: dark ── */
+    --color-ink-950: #080808;
+    --color-ink-900: #0f0f0f;
+    --color-ink-800: #181818;
+    --color-ink-700: #222222;
+    --color-ink-600: #2c2c2c;
+    --color-ink-500: #3a3a3a;
+    --color-ink-400: #525252;
+    --color-ink-300: #737373;
+    --color-ink-200: #a3a3a3;
+    --color-ink-100: #d1d1d1;
+    --color-ink-50: #f2f2f2;
+
+    /* ── Accent — Acid Lime ── */
+    --color-lime-700: #6b8a00;
+    --color-lime-600: #96be00;
+    --color-lime-500: #bef200; /* primary accent — slightly softer than #c8ff00 */
+    --color-lime-400: #ccf533;
+    --color-lime-300: #d9f866;
+    --color-lime-200: #e8fb99;
+
+    /* ── Secondary Accent — Electric Orange ── */
+    --color-orange-600: #b84200;
+    --color-orange-500: #f05200;
+    --color-orange-400: #ff6b1f;
+    --color-orange-300: #ff8f52;
+
+    /* ── Spray Can Palette ── */
+    --color-spray-cyan: #00d9f5;
+    --color-spray-pink: #ff2070;
+    --color-spray-purple: #9333ea;
+    --color-spray-yellow: #f5cc00;
+
+    /* ── Semantic — Dark Mode ── */
+    --color-bg-base: #0f0f0f;
+    --color-bg-raised: #181818;
+    --color-bg-overlay: #222222;
+    --color-bg-sunken: #080808;
+
+    --color-text-primary: #f2f2f2;
+    --color-text-secondary: #a3a3a3;
+    --color-text-muted: #6b6b6b;
+    --color-text-disabled: #444444;
+    --color-text-inverse: #080808;
+
+    --color-accent: #bef200;
+    --color-accent-hover: #ccf533;
+    --color-accent-dim: #6b8a00;
+
+    --color-cta: #f05200;
+    --color-cta-hover: #ff6b1f;
+
+    --color-border: #2c2c2c;
+    --color-border-light: #3a3a3a;
+    --color-border-accent: #6b8a00;
+
+    /* ── Status ── */
+    --color-success: #32e010;
+    --color-success-bg: #091505;
+    --color-warning: #f5cc00;
+    --color-warning-bg: #151200;
+    --color-error: #ff2070;
+    --color-error-bg: #18000c;
+    --color-info: #00d9f5;
+    --color-info-bg: #001519;
+
+    /* ── Radius — sharp street style ── */
+    --radius-none: 0px;
+    --radius-sm: 2px;
+    --radius-md: 4px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    --radius-full: 9999px;
+
+    /* ── Hard Shadows — graffiti on concrete ── */
+    --shadow-hard-sm: 2px 2px 0px #080808;
+    --shadow-hard-md: 3px 3px 0px #080808;
+    --shadow-hard-lg: 5px 5px 0px #080808;
+    --shadow-lime: 3px 3px 0px #6b8a00;
+    --shadow-orange: 3px 3px 0px #b84200;
+
+    --shadow-neon-lime: 0 0 10px rgba(190, 242, 0, 0.35),
+        0 0 28px rgba(190, 242, 0, 0.1);
+    --shadow-neon-orange: 0 0 10px rgba(240, 82, 0, 0.35),
+        0 0 28px rgba(240, 82, 0, 0.1);
+
+    /* ── Transitions ── */
+    --transition-snap: 100ms cubic-bezier(0.4, 0, 1, 1);
+    --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================================
+   LIGHT MODE OVERRIDES
+   ============================================================
+   Filosofi: bukan sekadar invert, tapi dirancang ulang untuk
+   surface putih/abu — contrast WCAG AA terjaga di semua level.
+   ============================================================ */
+
+html.light {
+    /* ── Backgrounds ── */
+    --color-bg-base: #f4f4f4;
+    --color-bg-raised: #ffffff;
+    --color-bg-overlay: #ececec;
+    --color-bg-sunken: #e6e6e6;
+
+    /* ── Text — contrast di atas bg terang ── */
+    --color-text-primary: #111111; /* 16:1 vs bg-base */
+    --color-text-secondary: #444444; /* 8:1 */
+    --color-text-muted: #737373; /* 4.5:1 — minimum AA */
+    --color-text-disabled: #b0b0b0;
+    --color-text-inverse: #ffffff;
+
+    /* ── Borders ── */
+    --color-border: #d0d0d0;
+    --color-border-light: #e2e2e2;
+    --color-border-accent: #6b8a00; /* tetap pakai lime-700 */
+
+    /* ── Accent — lime tetap nyala tapi tidak terlalu neon di terang ── */
+    --color-accent: #7aaa00; /* lebih gelap agar terbaca di bg putih */
+    --color-accent-hover: #8cc400;
+    --color-accent-dim: #4d7000;
+
+    /* ── CTA — orange sedikit lebih pekat ── */
+    --color-cta: #e04b00;
+    --color-cta-hover: #f05e14;
+
+    /* ── Status bg — pastel ringan, bukan pure white ── */
+    --color-success: #2da80e;
+    --color-success-bg: #edfce8;
+    --color-warning: #c49900;
+    --color-warning-bg: #fef9e0;
+    --color-error: #d91a5c;
+    --color-error-bg: #fde8f0;
+    --color-info: #0099b8;
+    --color-info-bg: #e0f8fc;
+
+    /* ── Ink scale — diflip untuk sidebar/topbar yang pakai ink ── */
+    --color-ink-950: #ffffff;
+    --color-ink-900: #f4f4f4;
+    --color-ink-800: #ececec;
+    --color-ink-700: #e2e2e2;
+    --color-ink-600: #d0d0d0;
+    --color-ink-500: #b0b0b0;
+    --color-ink-400: #737373;
+    --color-ink-300: #555555;
+    --color-ink-200: #333333;
+    --color-ink-100: #1a1a1a;
+    --color-ink-50: #080808;
+
+    /* ── Shadows — warm grey, tidak terlalu keras ── */
+    --shadow-hard-sm: 2px 2px 0px #c0c0c0;
+    --shadow-hard-md: 3px 3px 0px #c0c0c0;
+    --shadow-hard-lg: 5px 5px 0px #c0c0c0;
+    --shadow-lime: 3px 3px 0px #a8cc00;
+    --shadow-orange: 3px 3px 0px #e06030;
+
+    --shadow-neon-lime: 0 0 10px rgba(100, 160, 0, 0.2),
+        0 0 24px rgba(100, 160, 0, 0.07);
+    --shadow-neon-orange: 0 0 10px rgba(224, 75, 0, 0.2),
+        0 0 24px rgba(224, 75, 0, 0.07);
+}
+/* body background juga override manual karena hardcoded */
+html.light body {
+    background-color: #f5f5f5;
+    color: var(--color-text-primary);
+}
+
+html.light ::selection {
+    background: var(--color-lime-500);
+    color: var(--color-ink-50);
+}
+/* =====================================================
+   BASE
+   ===================================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background-color: var(--color-ink-900);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.55;
+    min-height: 100vh;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+::selection {
+    background: var(--color-lime-500);
+    color: var(--color-ink-950);
+}
+
+/* =====================================================
+   TYPOGRAPHY UTILITIES
+   ===================================================== */
+
+.font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.04em;
+}
+.font-mono {
+    font-family: var(--font-mono);
+}
+.font-body {
+    font-family: var(--font-sans);
+}
+.text-tag {
+    font-family: var(--font-display);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.text-drop-lime {
+    color: var(--color-lime-500);
+    text-shadow: 2px 2px 0px var(--color-lime-700),
+        4px 4px 0px rgba(0, 0, 0, 0.5);
+}
+
+.text-neon-lime {
+    color: var(--color-lime-400);
+    text-shadow: var(--shadow-neon-lime);
+}
+
+.text-neon-orange {
+    color: var(--color-orange-400);
+    text-shadow: var(--shadow-neon-orange);
+}
+
+/* =====================================================
+   CARDS
+   ===================================================== */
+
+.card {
+    background: var(--color-ink-800);
+    border: 1px solid var(--color-ink-600);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    transition: border-color var(--transition-base);
+}
+
+.card:hover {
+    border-color: var(--color-ink-500);
+}
+
+.card-hard {
+    background: var(--color-ink-800);
+    border: 1.5px solid var(--color-ink-100);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    box-shadow: var(--shadow-hard-md);
+    transition: all var(--transition-snap);
+}
+
+.card-hard:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-hard-lg);
+}
+
+.card-lime {
+    background: var(--color-ink-800);
+    border: 1.5px solid var(--color-lime-500);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-lime);
+}
+
+.card-hot {
+    background: var(--color-ink-800);
+    border: 1.5px solid var(--color-orange-500);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-orange);
+}
+
+.card-menu {
+    background: var(--color-ink-800);
+    border: 1.5px solid var(--color-ink-600);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.card-menu:hover {
+    border-color: var(--color-lime-500);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-lime);
+}
+
+.card-menu:active {
+    transform: translate(0, 0);
+    box-shadow: none;
+}
+
+/* =====================================================
+   BUTTONS
+   ===================================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: var(--radius-md);
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-snap);
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--color-lime-500);
+    outline-offset: 2px;
+}
+
+.btn-primary {
+    background: var(--color-lime-500);
+    color: var(--color-ink-950);
+    border: 1.5px solid var(--color-lime-500);
+    box-shadow: var(--shadow-hard-sm);
+}
+
+.btn-primary:hover {
+    background: var(--color-lime-400);
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-hard-md);
+}
+
+.btn-primary:active {
+    transform: translate(1px, 1px);
+    box-shadow: none;
+}
+
+.btn-cta {
+    background: var(--color-orange-500);
+    color: #ffffff;
+    border: 1.5px solid var(--color-orange-500);
+    box-shadow: var(--shadow-hard-sm);
+    font-size: 14px;
+}
+
+.btn-cta:hover {
+    background: var(--color-orange-400);
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-hard-md);
+}
+
+.btn-cta:active {
+    transform: translate(1px, 1px);
+    box-shadow: none;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--color-ink-100);
+    border: 1.5px solid var(--color-ink-400);
+}
+
+.btn-secondary:hover {
+    border-color: var(--color-ink-100);
+    color: #ffffff;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--color-ink-300);
+    border: 1.5px solid transparent;
+}
+
+.btn-ghost:hover {
+    color: var(--color-ink-100);
+    border-color: var(--color-ink-600);
+}
+
+.btn-danger {
+    background: transparent;
+    color: var(--color-error);
+    border: 1.5px solid var(--color-error);
+}
+
+.btn-danger:hover {
+    background: var(--color-error-bg);
+}
+
+.btn-mono {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0.01em;
+    background: var(--color-ink-700);
+    color: var(--color-lime-400);
+    border: 1px solid var(--color-ink-500);
+}
+
+.btn-mono:hover {
+    border-color: var(--color-lime-600);
+    color: var(--color-lime-300);
+}
+
+.btn-xs {
+    padding: 5px 10px;
+    font-size: 11px;
+}
+.btn-sm {
+    padding: 7px 14px;
+    font-size: 12px;
+}
+.btn-lg {
+    padding: 13px 28px;
+    font-size: 15px;
+}
+.btn-xl {
+    padding: 16px 36px;
+    font-size: 16px;
+    letter-spacing: 0.06em;
+}
+.btn-block {
+    width: 100%;
+}
+.btn-icon {
+    padding: 8px;
+    width: 36px;
+    height: 36px;
+}
+
+.btn:disabled,
+.btn[disabled] {
+    opacity: 0.35;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* =====================================================
+   FORMS
+   ===================================================== */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-ink-300);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.form-label .required {
+    color: var(--color-lime-500);
+    margin-left: 2px;
+}
+
+.form-input {
+    background: var(--color-ink-950);
+    border: 1.5px solid var(--color-ink-600);
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    padding: 10px 14px;
+    width: 100%;
+    transition: all var(--transition-base);
+    outline: none;
+}
+
+.form-input::placeholder {
+    color: var(--color-ink-400);
+    font-style: italic;
+}
+.form-input:hover {
+    border-color: var(--color-ink-500);
+}
+.form-input:focus {
+    border-color: var(--color-lime-500);
+    box-shadow: 0 0 0 3px rgba(200, 255, 0, 0.08);
+}
+.form-input.error {
+    border-color: var(--color-error);
+}
+
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23777' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+    cursor: pointer;
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+.form-error {
+    font-size: 12px;
+    color: var(--color-error);
+    font-family: var(--font-mono);
+}
+.form-hint {
+    font-size: 12px;
+    color: var(--color-ink-400);
+    font-family: var(--font-mono);
+}
+
+/* Toggle */
+.toggle-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+.toggle {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+}
+.toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.toggle-track {
+    position: absolute;
+    inset: 0;
+    background: var(--color-bg-sunken); /* off: #0a0a0a gelap */
+    border: 1.5px solid var(--color-border); /* off: #2e2e2e */
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-base);
+}
+
+.toggle input:checked + .toggle-track {
+    background: var(--color-accent); /* on: #c8ff00 acid lime */
+    border-color: var(--color-border-accent); /* on: #7a9c00 */
+}
+
+.toggle-thumb {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 4px;
+    width: 14px;
+    height: 14px;
+    background: var(--color-ink-400); /* thumb off: #555555 */
+    border-radius: 2px;
+    transition: all var(--transition-bounce);
+}
+
+.toggle input:checked ~ .toggle-thumb {
+    transform: translateY(-50%) translateX(20px);
+    background: var(
+        --color-text-inverse
+    ); /* thumb on: #0a0a0a — kontras di atas lime */
+}
+/* =====================================================
+   BADGES
+   ===================================================== */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+}
+
+.badge-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.badge-pending {
+    background: var(--color-warning-bg);
+    color: var(--color-warning);
+    border: 1px solid rgba(255, 214, 0, 0.3);
+}
+.badge-processing {
+    background: var(--color-info-bg);
+    color: var(--color-info);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+}
+.badge-completed {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+    border: 1px solid rgba(57, 255, 20, 0.3);
+}
+.badge-paid {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+    border: 1px solid rgba(57, 255, 20, 0.25);
+}
+.badge-unpaid {
+    background: var(--color-error-bg);
+    color: var(--color-error);
+    border: 1px solid rgba(255, 45, 120, 0.25);
+}
+.badge-lime {
+    background: rgba(200, 255, 0, 0.08);
+    color: var(--color-lime-400);
+    border: 1px solid rgba(200, 255, 0, 0.3);
+}
+.badge-orange {
+    background: rgba(255, 92, 0, 0.08);
+    color: var(--color-orange-400);
+    border: 1px solid rgba(255, 92, 0, 0.3);
+}
+.badge-available {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+    border: 1px solid rgba(57, 255, 20, 0.2);
+}
+.badge-unavailable {
+    background: var(--color-ink-800);
+    color: var(--color-ink-400);
+    border: 1px solid var(--color-ink-600);
+}
+
+.badge-pending .badge-dot {
+    background: var(--color-warning);
+}
+.badge-processing .badge-dot {
+    background: var(--color-info);
+    animation: blink-dot 1.2s ease-in-out infinite;
+}
+.badge-completed .badge-dot {
+    background: var(--color-success);
+}
+
+/* Sticker badge */
+.sticker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border: 2px solid currentColor;
+    border-radius: var(--radius-sm);
+    transform: rotate(-1.5deg);
+    transition: transform var(--transition-bounce);
+}
+
+.sticker:hover {
+    transform: rotate(0deg) scale(1.05);
+}
+.sticker-lime {
+    color: var(--color-lime-500);
+}
+.sticker-orange {
+    color: var(--color-orange-500);
+}
+.sticker-cyan {
+    color: var(--color-spray-cyan);
+}
+
+/* =====================================================
+   NAVIGATION / SIDEBAR
+   ===================================================== */
+
+.sidebar {
+    background: var(--color-ink-950);
+    border-right: 1px solid var(--color-ink-700);
+    width: 240px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 40;
+}
+
+.sidebar-logo {
+    padding: 24px 20px 16px;
+    border-bottom: 1px solid var(--color-ink-700);
+}
+
+.sidebar-logo-mark {
+    font-family: var(--font-display);
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.sidebar-logo-mark .accent {
+    color: var(--color-lime-500);
+}
+
+.sidebar-logo-sub {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ink-400);
+    margin-top: 4px;
+}
+
+.sidebar-nav {
+    padding: 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sidebar-section {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ink-500);
+    padding: 14px 8px 6px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: var(--radius-md);
+    color: var(--color-ink-300);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all var(--transition-base);
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    letter-spacing: 0.01em;
+    position: relative;
+}
+
+.nav-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 25%;
+    height: 50%;
+    width: 2px;
+    background: var(--color-lime-500);
+    border-radius: 0 2px 2px 0;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.nav-item:hover {
+    background: var(--color-ink-800);
+    color: var(--color-ink-100);
+}
+.nav-item.active {
+    background: var(--color-ink-800);
+    color: var(--color-lime-500);
+    font-weight: 600;
+}
+.nav-item.active::before {
+    opacity: 1;
+}
+
+.nav-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: var(--color-ink-500);
+    transition: color var(--transition-base);
+}
+.nav-item:hover .nav-icon {
+    color: var(--color-ink-200);
+}
+.nav-item.active .nav-icon {
+    color: var(--color-lime-500);
+}
+
+.nav-badge {
+    margin-left: auto;
+    background: var(--color-orange-500);
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    min-width: 18px;
+    text-align: center;
+}
+
+.topbar {
+    background: var(--color-ink-950);
+    border-bottom: 1px solid var(--color-ink-700);
+    height: 56px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+}
+
+/* =====================================================
+   TABLE
+   ===================================================== */
+
+.table-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--color-ink-600);
+    border-radius: var(--radius-lg);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.data-table thead {
+    background: var(--color-ink-950);
+    border-bottom: 1px solid var(--color-ink-600);
+}
+
+.data-table th {
+    padding: 10px 16px;
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink-400);
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: 12px 16px;
+    color: var(--color-ink-100);
+    vertical-align: middle;
+    border-bottom: 1px solid var(--color-ink-700);
+}
+.data-table tbody tr {
+    transition: background var(--transition-snap);
+}
+.data-table tbody tr:hover {
+    background: var(--color-ink-800);
+}
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* =====================================================
+   ORDER CARD
+   ===================================================== */
+
+.order-card {
+    background: var(--color-ink-800);
+    border: 1.5px solid var(--color-ink-600);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    transition: all var(--transition-base);
+    position: relative;
+}
+
+.order-card.new {
+    border-color: var(--color-orange-500);
+    box-shadow: var(--shadow-orange);
+    animation: order-pulse 2s ease-in-out infinite;
+}
+.order-card.making {
+    border-color: var(--color-info);
+}
+.order-card.done {
+    border-color: var(--color-success);
+    opacity: 0.7;
+}
+
+.order-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-lime-400);
+    letter-spacing: 0.08em;
+}
+
+/* =====================================================
+   STAT CARDS
+   ===================================================== */
+
+.stat-card {
+    background: var(--color-ink-800);
+    border: 1px solid var(--color-ink-600);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-lime-500);
+}
+
+.stat-card.accent-orange::before {
+    background: var(--color-orange-500);
+}
+.stat-card.accent-cyan::before {
+    background: var(--color-spray-cyan);
+}
+.stat-card.accent-pink::before {
+    background: var(--color-spray-pink);
+}
+
+.stat-value {
+    font-family: var(--font-display);
+    font-size: 36px;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.stat-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-400);
+    margin-top: 6px;
+}
+
+.stat-change {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    margin-top: 4px;
+}
+.stat-change.up {
+    color: var(--color-success);
+}
+.stat-change.down {
+    color: var(--color-error);
+}
+
+/* =====================================================
+   OPTION PILLS (Customer customization)
+   ===================================================== */
+
+.option-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.option-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 14px;
+    border: 1.5px solid var(--color-ink-600);
+    border-radius: var(--radius-sm);
+    background: var(--color-ink-900);
+    color: var(--color-ink-300);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-snap);
+    user-select: none;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.option-pill:hover {
+    border-color: var(--color-ink-400);
+    color: var(--color-ink-100);
+    background: var(--color-ink-800);
+}
+.option-pill.selected {
+    background: rgba(200, 255, 0, 0.08);
+    border-color: var(--color-lime-500);
+    color: var(--color-lime-400);
+    box-shadow: var(--shadow-lime);
+    transform: translate(-1px, -1px);
+}
+
+/* =====================================================
+   CART
+   ===================================================== */
+
+.cart-item {
+    display: flex;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--color-ink-700);
+    align-items: flex-start;
+}
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item-img {
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+    flex-shrink: 0;
+    background: var(--color-ink-700);
+    border: 1px solid var(--color-ink-600);
+}
+
+.qty-control {
+    display: inline-flex;
+    align-items: center;
+    border: 1.5px solid var(--color-ink-600);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.qty-btn {
+    background: var(--color-ink-800);
+    border: none;
+    color: var(--color-ink-300);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-snap);
+    font-size: 16px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.qty-btn:hover {
+    background: var(--color-lime-500);
+    color: var(--color-ink-950);
+}
+
+.qty-value {
+    min-width: 36px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    border-left: 1px solid var(--color-ink-600);
+    border-right: 1px solid var(--color-ink-600);
+    line-height: 32px;
+}
+
+/* =====================================================
+   PRICE
+   ===================================================== */
+
+.price {
+    font-family: var(--font-display);
+    color: var(--color-lime-400);
+    letter-spacing: 0.03em;
+    line-height: 1;
+}
+.price-sm {
+    font-size: 16px;
+}
+.price-md {
+    font-size: 22px;
+}
+.price-lg {
+    font-size: 30px;
+}
+.price-xl {
+    font-size: 42px;
+}
+.price-strike {
+    font-family: var(--font-mono);
+    text-decoration: line-through;
+    color: var(--color-ink-500);
+    font-size: 13px;
+}
+
+/* =====================================================
+   MODAL
+   ===================================================== */
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.modal {
+    background: var(--color-ink-800);
+    border: 1.5px solid var(--color-ink-500);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 8px 8px 0px var(--color-ink-950);
+    animation: modal-slam var(--transition-bounce) both;
+}
+
+.modal-lg {
+    max-width: 640px;
+}
+
+.modal-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    letter-spacing: 0.04em;
+    color: #ffffff;
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.modal-close {
+    background: transparent;
+    border: 1px solid var(--color-ink-600);
+    color: var(--color-ink-400);
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-snap);
+    flex-shrink: 0;
+}
+
+.modal-close:hover {
+    border-color: var(--color-error);
+    color: var(--color-error);
+}
+
+/* =====================================================
+   TOAST
+   ===================================================== */
+
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+}
+
+.toast {
+    pointer-events: auto;
+    background: var(--color-ink-800);
+    border: 1.5px solid var(--color-ink-500);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    min-width: 260px;
+    max-width: 360px;
+    box-shadow: var(--shadow-hard-md);
+    animation: toast-slam 0.25s var(--transition-bounce) both;
+    font-family: var(--font-mono);
+    font-size: 12px;
+}
+
+.toast-success {
+    border-left: 3px solid var(--color-success);
+}
+.toast-error {
+    border-left: 3px solid var(--color-error);
+}
+.toast-warning {
+    border-left: 3px solid var(--color-warning);
+}
+.toast-info {
+    border-left: 3px solid var(--color-info);
+}
+
+/* =====================================================
+   TABLE INDICATOR
+   ===================================================== */
+
+.table-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(200, 255, 0, 0.06);
+    border: 1.5px solid var(--color-lime-600);
+    border-radius: var(--radius-sm);
+    padding: 5px 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-lime-400);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* =====================================================
+   DIVIDER
+   ===================================================== */
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--color-ink-700);
+    margin: 20px 0;
+}
+
+.divider-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-500);
+}
+
+.divider-label::before,
+.divider-label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--color-ink-700);
+}
+
+/* =====================================================
+   LOADING
+   ===================================================== */
+
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--color-ink-800) 25%,
+        var(--color-ink-700) 50%,
+        var(--color-ink-800) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-scan 1.4s linear infinite;
+    border-radius: var(--radius-md);
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(200, 255, 0, 0.15);
+    border-top-color: var(--color-lime-500);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    display: inline-block;
+}
+.spinner-orange {
+    border-color: rgba(255, 92, 0, 0.15);
+    border-top-color: var(--color-orange-500);
+}
+
+/* =====================================================
+   PAGE LAYOUT
+   ===================================================== */
+
+.page-wrapper {
+    margin-left: 240px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.page-content {
+    flex: 1;
+    padding: 24px;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+}
+.page-header {
+    margin-bottom: 24px;
+}
+
+/* Taruh ini di paling atas file CSS-mu (sebelum komponen lain) */
+:root {
+    --text-title: #1a1a1a; /* Light Mode */
+}
+
+html:not(.light) {
+    --text-title: #ffffff; /* Dark Mode */
+}
+
+.page-title {
+    font-family: var(--font-display);
+    font-size: 42px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--text-title);
+    transition: color 0.4s ease;
+}
+.page-title .accent {
+    color: var(--color-lime-500);
+}
+
+.page-subtitle {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-ink-400);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 6px;
+}
+
+.grid-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+.grid-menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+}
+.grid-orders {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+}
+
+/* =====================================================
+   SCROLLBAR
+   ===================================================== */
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+::-webkit-scrollbar-track {
+    background: var(--color-ink-950);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--color-ink-600);
+    border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-lime-700);
+}
+
+/* =====================================================
+   KEYFRAMES
+   ===================================================== */
+
+@keyframes modal-slam {
+    from {
+        opacity: 0;
+        transform: scale(0.92) translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes toast-slam {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes skeleton-scan {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes blink-dot {
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.3;
+        transform: scale(0.6);
+    }
+}
+
+@keyframes order-pulse {
+    0%,
+    100% {
+        box-shadow: var(--shadow-orange);
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(255, 92, 0, 0.15), var(--shadow-orange);
+    }
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-right {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-fade-up {
+    animation: fade-up 0.4s ease both;
+}
+.animate-slide-right {
+    animation: slide-right 0.3s ease both;
+}
+
+.stagger-1 {
+    animation-delay: 0.04s;
+}
+.stagger-2 {
+    animation-delay: 0.08s;
+}
+.stagger-3 {
+    animation-delay: 0.12s;
+}
+.stagger-4 {
+    animation-delay: 0.16s;
+}
+.stagger-5 {
+    animation-delay: 0.2s;
+}
+.stagger-6 {
+    animation-delay: 0.24s;
+}
+
+/* =====================================================
+   LIVEWIRE
+   ===================================================== */
+
+[wire\:loading] {
+    opacity: 0.5;
+    pointer-events: none;
+    transition: opacity 0.15s;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform var(--transition-base);
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    .page-wrapper {
+        margin-left: 0;
+    }
+    .page-content {
+        padding: 16px;
+    }
+    .page-title {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 640px) {
+    .grid-dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .grid-menu {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .grid-orders {
+        grid-template-columns: 1fr;
+    }
+    .modal {
+        padding: 16px;
+    }
+    .stat-value {
+        font-size: 28px;
+    }
+}
+
+@media print {
+    .sidebar,
+    .topbar,
+    .btn {
+        display: none !important;
+    }
+    .page-wrapper {
+        margin-left: 0;
+    }
+    body {
+        background: white;
+        color: black;
+    }
+}
+/* Matikan progress bar bawaan Livewire */
+#nprogress .bar {
+    background: var(--color-lime-500) !important;
+    height: 2px !important;
+}
+
+#nprogress .peg {
+    box-shadow: 0 0 8px var(--color-lime-500), 0 0 4px var(--color-lime-500) !important;
+}
+
+#nprogress .spinner-icon {
+    border-top-color: var(--color-lime-500) !important;
+    border-left-color: var(--color-lime-500) !important;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+.tt-dark {
+    background: #0c1a2e;
+    border: 1.5px solid #1e3a5a;
+}
+
+.tt-light {
+    background: #78c8f5;
+    border: 1.5px solid #4aade0;
+}
+
+.tt-to-light .celestial,
+.tt-to-dark .celestial {
+    transform: translateX(30px) translateY(10px) !important;
+}
+/* =====================================================
+   SIDEBAR — Refactored & Cleaned Up
+   Replace/merge ke dalam app.css kamu
+   ===================================================== */
+
+/* ── Sidebar Container ── */
+.sidebar {
+    background: var(--color-ink-950);
+    border-right: 1px solid var(--color-ink-700);
+    width: 240px;
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 40;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* ── Sidebar Header (Logo + Bell) ── */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 20px 16px 16px;
+    border-bottom: 1px solid var(--color-ink-700);
+    flex-shrink: 0;
+}
+
+.sidebar-logo-mark {
+    font-family: var(--font-display);
+    font-size: 26px;
+    letter-spacing: 0.06em;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.sidebar-logo-mark .accent {
+    color: var(--color-lime-500);
+}
+
+.sidebar-logo-sub {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-ink-500);
+    margin-top: 3px;
+}
+
+/* Bell button di header sidebar */
+.sidebar-bell-btn {
+    background: transparent;
+    border: 1px solid var(--color-ink-600);
+    color: var(--color-ink-400);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: border-color var(--transition-snap),
+        color var(--transition-snap);
+    flex-shrink: 0;
+}
+
+.sidebar-bell-btn:hover {
+    border-color: var(--color-ink-300);
+    color: var(--color-ink-100);
+}
+
+/* Notification badge (shared: topbar + bell) */
+.notif-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--color-orange-500);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3px;
+    border: 1.5px solid var(--color-ink-950);
+    line-height: 1;
+}
+
+/* ── Navigation ── */
+.sidebar-nav {
+    flex: 1;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    overflow-y: auto;
+}
+
+.sidebar-section {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-ink-500);
+    padding: 16px 8px 5px;
+    user-select: none;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--radius-md);
+    color: var(--color-ink-300);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background var(--transition-base), color var(--transition-base);
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    letter-spacing: 0.01em;
+    position: relative;
+}
+
+.nav-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 20%;
+    height: 60%;
+    width: 2.5px;
+    background: var(--color-lime-500);
+    border-radius: 0 2px 2px 0;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.nav-item:hover {
+    background: var(--color-ink-800);
+    color: var(--color-ink-100);
+}
+
+.nav-item.active {
+    background: var(--color-ink-800);
+    color: var(--color-lime-400);
+    font-weight: 600;
+}
+
+.nav-item.active::before {
+    opacity: 1;
+}
+
+.nav-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: var(--color-ink-500);
+    transition: color var(--transition-base);
+}
+
+.nav-item:hover .nav-icon {
+    color: var(--color-ink-200);
+}
+
+.nav-item.active .nav-icon {
+    color: var(--color-lime-400);
+}
+
+.nav-badge {
+    margin-left: auto;
+    background: var(--color-orange-500);
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    min-width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* ── Footer ── */
+.sidebar-footer {
+    padding: 12px;
+    border-top: 1px solid var(--color-ink-700);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.sidebar-theme-wrap {
+    background: var(--color-ink-900);
+    border: 1px solid var(--color-ink-700);
+    border-radius: var(--radius-md);
+    padding: 8px 10px;
+}
+
+/* User row */
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    background: var(--color-ink-800);
+    border: 1px solid var(--color-ink-600);
+    border-radius: var(--radius-md);
+}
+
+.sidebar-user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    background: var(--color-lime-500);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: var(--color-ink-950);
+    line-height: 1;
+}
+
+.sidebar-user-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.sidebar-user-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-ink-100);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar-user-role {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--color-ink-500);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 1px;
+}
+
+.sidebar-logout-btn {
+    background: transparent;
+    border: 1px solid var(--color-ink-600);
+    color: var(--color-ink-400);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: border-color var(--transition-snap),
+        color var(--transition-snap);
+    flex-shrink: 0;
+}
+
+.sidebar-logout-btn:hover {
+    border-color: var(--color-error);
+    color: var(--color-error);
+}
+
+/* ── Mobile Topbar ── */
+.topbar-icon-btn {
+    background: var(--color-ink-800);
+    border: 1.5px solid var(--color-ink-600);
+    color: var(--color-ink-200);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.topbar-icon-btn:hover {
+    border-color: var(--color-ink-400);
+    color: #fff;
+}
+
+.mobile-logo {
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 0.06em;
+    color: #ffffff;
+    line-height: 1;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    user-select: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform var(--transition-base);
+        box-shadow: none;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+        box-shadow: 4px 0 32px rgba(0, 0, 0, 0.6);
+    }
+
+    .page-wrapper {
+        margin-left: 0 !important;
+    }
+}
+
+/* =====================================================
+   WARSO COFFEE — LIGHT MODE FIX PATCH
+   Tempel di bagian PALING BAWAH app.css kamu
+   Tidak mengubah fungsional, hanya memperbaiki
+   komponen yang masih hardcoded ke nilai dark.
+   ===================================================== */
+
+/* ── 1. Body Background ──
+   Masalah: body pakai var(--color-ink-900) yang di dark = #0f0f0f
+   Di light mode ink-900 di-flip ke #f4f4f4 — sudah benar TAPI
+   background-image noise tetap muncul. Ini override bersih. */
+html.light body {
+    background-color: var(--color-bg-base); /* #f4f4f4 */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    /* opacity noise dikurangi dari 0.04 → 0.025 agar tidak terlalu noisy di bg terang */
+}
+
+/* ── 2. Form Input ──
+   Masalah: background hardcoded ke var(--color-ink-950)
+   Di light mode ink-950 = #ffffff, border jadi tidak kelihatan */
+html.light .form-input {
+    background: var(
+        --color-bg-sunken
+    ); /* #e6e6e6 — sedikit lebih gelap dari bg */
+    border-color: var(--color-border); /* #d0d0d0 */
+    color: var(--color-text-primary); /* #111111 */
+}
+
+html.light .form-input:hover {
+    border-color: var(
+        --color-border-light
+    ); /* #e2e2e2 — flip: lebih gelap saat hover */
+    /* Note: di light mode border-light (#e2e2e2) lebih terang dari border (#d0d0d0)
+       jadi kita pakai ink-400 yang = #737373 di light mode untuk hover */
+    border-color: var(--color-ink-400); /* #737373 */
+}
+
+html.light .form-input:focus {
+    border-color: var(--color-accent); /* #7aaa00 */
+    background: var(--color-bg-raised); /* #ffffff */
+    box-shadow: 0 0 0 3px rgba(122, 170, 0, 0.12);
+}
+
+html.light .form-input::placeholder {
+    color: var(--color-ink-300); /* #555555 di light mode */
+}
+
+/* ── 3. Card Components ──
+   Masalah: semua card pakai ink-800 (di light = #ececec)
+   dan border ink-600 (di light = #d0d0d0) — sebenarnya OK
+   tapi perlu dipastikan konsisten */
+html.light .card,
+html.light .card-hard {
+    background: var(--color-bg-raised); /* #ffffff */
+    border-color: var(--color-border); /* #d0d0d0 */
+}
+
+html.light .card-hard {
+    box-shadow: var(
+        --shadow-hard-md
+    ); /* pakai shadow light mode yang sudah di-override */
+}
+
+html.light .card-hard:hover {
+    box-shadow: var(--shadow-hard-lg);
+}
+
+html.light .card-lime {
+    background: var(--color-bg-raised);
+    border-color: var(--color-accent); /* #7aaa00 */
+    box-shadow: var(--shadow-lime);
+}
+
+html.light .card-hot {
+    background: var(--color-bg-raised);
+    border-color: var(--color-cta); /* #e04b00 */
+    box-shadow: var(--shadow-orange);
+}
+
+html.light .card-menu {
+    background: var(--color-bg-raised);
+    border-color: var(--color-border);
+}
+
+html.light .card-menu:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-lime);
+}
+
+/* ── 4. Data Table ──
+   Masalah: thead background ink-950 = #ffffff di light mode
+   tidak ada pembeda antara header dan baris data */
+html.light .table-wrapper {
+    border-color: var(--color-border);
+}
+
+html.light .data-table thead {
+    background: var(--color-bg-sunken); /* #e6e6e6 — abu terang untuk header */
+    border-bottom-color: var(--color-border);
+}
+
+html.light .data-table th {
+    color: var(--color-ink-300); /* #555555 di light mode */
+}
+
+html.light .data-table td {
+    color: var(--color-text-primary);
+    border-bottom-color: var(--color-border); /* #d0d0d0 */
+}
+
+html.light .data-table tbody tr:hover {
+    background: var(--color-bg-overlay); /* #ececec */
+}
+
+/* ── 5. Stat Card ──
+   Masalah: background ink-800 = #ececec di light, OK tapi
+   stat-value warnanya #ffffff — tidak terbaca di bg terang */
+html.light .stat-card {
+    background: var(--color-bg-raised); /* #ffffff */
+    border-color: var(--color-border);
+}
+
+html.light .stat-value {
+    color: var(--color-text-primary); /* #111111 */
+}
+
+html.light .stat-label {
+    color: var(--color-ink-300); /* #555555 */
+}
+
+/* ── 6. Order Card ──
+   Masalah: background ink-800 dan state colors perlu dicek */
+html.light .order-card {
+    background: var(--color-bg-raised);
+    border-color: var(--color-border);
+}
+
+html.light .order-card.new {
+    border-color: var(--color-cta); /* #e04b00 */
+    box-shadow: var(--shadow-orange);
+}
+
+html.light .order-card.making {
+    border-color: var(--color-info); /* #0099b8 */
+}
+
+html.light .order-card.done {
+    border-color: var(--color-success); /* #2da80e */
+}
+
+/* ── 7. Sidebar ──
+   Di light mode ink-950 = #ffffff — sidebar jadi putih
+   Kita kasih bg yang sedikit berbeda dari page agar ada pembeda */
+html.light .sidebar {
+    background: var(--color-bg-raised); /* #ffffff */
+    border-right-color: var(--color-border); /* #d0d0d0 */
+}
+
+html.light .sidebar-header {
+    border-bottom-color: var(--color-border);
+}
+
+html.light .sidebar-logo-mark {
+    color: var(--color-ink-300); /* #555555 di light mode */
+}
+
+html.light .sidebar-section {
+    color: var(--color-ink-300); /* #555555 */
+}
+
+html.light .sidebar-nav {
+    /* nav section labels lebih soft */
+}
+
+html.light .nav-item {
+    color: var(--color-ink-200); /* #333333 di light mode */
+}
+
+html.light .nav-item:hover {
+    background: var(--color-bg-overlay); /* #ececec */
+    color: var(--color-ink-50); /* #080808 — hampir hitam */
+}
+
+html.light .nav-item.active {
+    background: var(--color-bg-overlay);
+    color: var(--color-accent); /* #7aaa00 */
+}
+
+html.light .nav-icon {
+    color: var(--color-ink-300); /* #555555 */
+}
+
+html.light .nav-item:hover .nav-icon {
+    color: var(--color-ink-100); /* #1a1a1a */
+}
+
+html.light .nav-item.active .nav-icon {
+    color: var(--color-accent);
+}
+
+html.light .sidebar-footer {
+    border-top-color: var(--color-border);
+}
+
+html.light .sidebar-theme-wrap {
+    background: var(--color-bg-overlay);
+    border-color: var(--color-border);
+}
+
+html.light .sidebar-user {
+    background: var(--color-bg-overlay);
+    border-color: var(--color-border);
+}
+
+html.light .sidebar-user-name {
+    color: var(--color-text-primary);
+}
+
+html.light .sidebar-bell-btn {
+    border-color: var(--color-border);
+    color: var(--color-ink-300);
+}
+
+html.light .sidebar-bell-btn:hover {
+    border-color: var(--color-ink-200);
+    color: var(--color-ink-50);
+}
+
+html.light .sidebar-logout-btn {
+    border-color: var(--color-border);
+    color: var(--color-ink-300);
+}
+
+/* ── 8. Topbar ──
+   Di light mode ink-950 = #ffffff */
+html.light .topbar {
+    background: var(--color-bg-raised); /* #ffffff */
+    border-bottom-color: var(--color-border);
+}
+
+/* ── 9. Modal ──
+   Masalah: background ink-800 = #ececec di light, box shadow gelap */
+html.light .modal {
+    background: var(--color-bg-raised); /* #ffffff */
+    border-color: var(--color-border);
+    box-shadow: 8px 8px 0px var(--color-ink-400); /* #737373 di light */
+}
+
+html.light .modal-title {
+    color: var(--color-text-primary);
+}
+
+html.light .modal-close {
+    border-color: var(--color-border);
+    color: var(--color-ink-300);
+}
+
+/* ── 10. Toast ──
+   Background toast di light mode */
+html.light .toast {
+    background: var(--color-bg-raised);
+    border-color: var(--color-border);
+    box-shadow: var(--shadow-hard-md);
+}
+
+/* ── 11. Option Pills ──
+   Masalah: background ink-900 = #f4f4f4 di light, border ink-600 = #d0d0d0 */
+html.light .option-pill {
+    background: var(--color-bg-sunken); /* #e6e6e6 */
+    border-color: var(--color-border);
+    color: var(--color-ink-200); /* #333333 */
+}
+
+html.light .option-pill:hover {
+    border-color: var(--color-ink-300); /* #555555 */
+    color: var(--color-ink-50); /* #080808 */
+    background: var(--color-bg-overlay);
+}
+
+html.light .option-pill.selected {
+    background: rgba(122, 170, 0, 0.1);
+    border-color: var(--color-accent); /* #7aaa00 */
+    color: var(--color-accent-dim); /* #4d7000 */
+    box-shadow: var(--shadow-lime);
+}
+
+/* ── 12. Cart ──
+   border-bottom dan qty control */
+html.light .cart-item {
+    border-bottom-color: var(--color-border);
+}
+
+html.light .cart-item-img {
+    background: var(--color-bg-overlay);
+    border-color: var(--color-border);
+}
+
+html.light .qty-control {
+    border-color: var(--color-border);
+}
+
+html.light .qty-btn {
+    background: var(--color-bg-overlay);
+    color: var(--color-ink-200);
+}
+
+html.light .qty-btn:hover {
+    background: var(--color-accent);
+    color: var(--color-text-inverse); /* #ffffff di light mode */
+}
+
+html.light .qty-value {
+    color: var(--color-text-primary);
+    border-color: var(--color-border);
+}
+
+/* ── 13. Skeleton & Spinner ──
+   Skeleton gradient di light mode */
+html.light .skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--color-bg-overlay) 25%,
+        var(--color-border) 50%,
+        var(--color-bg-overlay) 75%
+    );
+    background-size: 200% 100%;
+}
+
+/* ── 14. Divider ──
+   border dan label color */
+html.light .divider {
+    border-top-color: var(--color-border);
+}
+
+html.light .divider-label {
+    color: var(--color-ink-300); /* #555555 */
+}
+
+html.light .divider-label::before,
+html.light .divider-label::after {
+    background: var(--color-border);
+}
+
+/* ── 15. Table Indicator ──
+   Badge di sudut tabel */
+html.light .table-indicator {
+    background: rgba(122, 170, 0, 0.08);
+    border-color: var(--color-border-accent); /* #6b8a00 — tetap sama */
+    color: var(--color-accent-dim); /* #4d7000 — lebih gelap agar terbaca */
+}
+
+/* ── 16. Topbar Icon Button (mobile) ── */
+html.light .topbar-icon-btn {
+    background: var(--color-bg-overlay);
+    border-color: var(--color-border);
+    color: var(--color-ink-200);
+}
+
+html.light .topbar-icon-btn:hover {
+    border-color: var(--color-ink-300);
+    color: var(--color-ink-50);
+}
+
+/* ── 17. Price text ──
+   Lime accent di light mode sudah di-override ke #7aaa00
+   Tapi price class pakai lime-400 langsung */
+html.light .price {
+    color: var(
+        --color-accent-dim
+    ); /* #4d7000 — lebih gelap, terbaca di bg putih */
+}
+
+/* ── 18. Form Select dropdown arrow ──
+   Di light mode arrow SVG inline pakai stroke #777 — sudah OK */
+
+/* ── 19. Scrollbar ──
+   Di light mode scrollbar track perlu ikut bg */
+html.light ::-webkit-scrollbar-track {
+    background: var(--color-bg-overlay); /* #ececec */
+}
+
+html.light ::-webkit-scrollbar-thumb {
+    background: var(--color-border); /* #d0d0d0 */
+}
+
+html.light ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent-dim); /* #4d7000 */
+}
+
+/* ── 20. Badge & Sticker ──
+   Badge background sudah pakai --color-*-bg variables
+   yang sudah di-override di light mode. Tapi badge-lime
+   dan badge-orange masih pakai rgba hardcoded */
+html.light .badge-lime {
+    background: rgba(122, 170, 0, 0.1);
+    color: var(--color-accent-dim); /* #4d7000 */
+    border-color: rgba(122, 170, 0, 0.35);
+}
+
+html.light .badge-orange {
+    background: rgba(224, 75, 0, 0.08);
+    color: var(--color-cta); /* #e04b00 */
+    border-color: rgba(224, 75, 0, 0.3);
+}
+
+html.light .badge-available {
+    background: var(--color-success-bg); /* #edfce8 */
+    color: var(--color-success); /* #2da80e */
+}
+
+html.light .badge-unavailable {
+    background: var(--color-bg-overlay);
+    color: var(--color-ink-300); /* #555555 */
+    border-color: var(--color-border);
+}
+
+/* ── 21. Form label & hint ── */
+html.light .form-label {
+    color: var(--color-ink-300); /* #555555 */
+}
+
+html.light .form-hint {
+    color: var(--color-ink-300);
+}
+
+/* ── 22. Btn Mono ──
+   Di light mode background ink-700 = #e2e2e2, text lime-400 kurang kontras */
+html.light .btn-mono {
+    background: var(--color-bg-overlay); /* #ececec */
+    color: var(--color-accent-dim); /* #4d7000 */
+    border-color: var(--color-border);
+}
+
+html.light .btn-mono:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent); /* #7aaa00 */
+}
+
+/* ── 23. Btn Secondary & Ghost ── */
+html.light .btn-secondary {
+    color: var(--color-ink-200); /* #333333 */
+    border-color: var(--color-border);
+}
+
+html.light .btn-secondary:hover {
+    border-color: var(--color-ink-100); /* #1a1a1a */
+    color: var(--color-ink-50); /* #080808 */
+}
+
+html.light .btn-ghost {
+    color: var(--color-ink-300); /* #555555 */
+}
+
+html.light .btn-ghost:hover {
+    color: var(--color-ink-100); /* #1a1a1a */
+    border-color: var(--color-border);
+}
+
+/* ── 24. Nav Badge (notification count di sidebar) ── */
+/* nav-badge sudah orange — warnanya tetap kontras di kedua mode, tidak perlu override */
+
+/* ── 25. Page Subtitle ── */
+html.light .page-subtitle {
+    color: var(--color-ink-300); /* #555555 */
+}
+
+/* ── 26. Sidebar logo-sub (ADMIN PANEL text) ── */
+html.light .sidebar-logo-sub {
+    color: var(--color-ink-300);
+}
+
+/* ── Notif badge (orange) — tidak perlu override, already hardcoded #fff bg orange ── */
+
+/* ── Order tag ── */
+html.light .order-tag {
+    color: var(--color-accent-dim); /* #4d7000 */
+}
+
+/* ── Price Strike ── */
+html.light .price-strike {
+    color: var(--color-ink-300); /* #555555 */
+}
+
+/* ── Text neon & drop — di light mode efek neon dikurangi ── */
+html.light .text-neon-lime {
+    color: var(--color-accent-dim); /* #4d7000 */
+    text-shadow: var(--shadow-neon-lime); /* sudah di-override ke nilai soft */
+}
+
+html.light .text-neon-orange {
+    color: var(--color-cta); /* #e04b00 */
+    text-shadow: var(--shadow-neon-orange);
 }
