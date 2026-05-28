@@ -218,10 +218,11 @@ class Index extends Component
 
     public function render()
     {
-        $categories = Category::withCount(['menus' => fn($q) => $q->where('is_available', true)])->get();
+        // Kategori menghitung menu yang masih aktif
+        $categories = Category::withCount(['menus' => fn($q) => $q->where('is_active', true)])->get();
 
         $menus = Menu::with('category')
-            ->where('is_available', true)
+            ->where('is_active', true) // UBAH INI: Tampilkan semua menu aktif (Termasuk yang Habis)
             ->when($this->activeCategoryId, fn($q) => $q->where('category_id', $this->activeCategoryId))
             ->get();
 

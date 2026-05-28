@@ -29,7 +29,7 @@ class Login extends Component
 
         session()->regenerate();
 
-        $this->redirect('/dashboard', navigate: true);
+        $this->redirect('/dashboard/index', navigate: true);
     }
 
     public function render()

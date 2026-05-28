@@ -45,4 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/meja/index', \App\Livewire\Admin\Meja\Index::class)->name('meja.index');
     Route::get('/meja/create', \App\Livewire\Admin\Meja\Create::class)->name('meja.create');
     Route::get('/meja/{id}/edit', \App\Livewire\Admin\Meja\Edit::class)->name('meja.edit');
+
+    Route::get('/riwayat/index', \App\Livewire\Admin\Riwayat\Index::class)->name('riwayat.index');
+
+    Route::get('/report/index', \App\Livewire\Admin\Report\Index::class)->name('report.index');
 });

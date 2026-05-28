@@ -222,7 +222,7 @@
                                             </span>
                                         </div>
                                         <span class="price price-sm" style="font-size:12px; flex-shrink:0;">
-                                            Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}
+                                            Rp {{ number_format($item->price, 0, ',', '.') }}
                                         </span>
                                     </div>
 

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('price');
             $table->string('image')->nullable();
             $table->boolean('is_available')->default(true);
+            $table->boolean('is_active')->default(true); // Tambahkan ini di migration menus
             $table->timestamps();
         });
     }

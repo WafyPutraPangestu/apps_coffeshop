@@ -170,8 +170,8 @@
                             <span class="nav-badge">{{ $pendingCount }}</span>
                         @endif
                     </a>
-                    <a wire:navigate href="#"
-                        class="nav-item {{ request()->routeIs('orders.history') ? 'active' : '' }}">
+                    <a wire:navigate href="{{ route('riwayat.index') }}"
+                        class="nav-item {{ request()->routeIs('riwayat.index') ? 'active' : '' }}">
                         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10" />
@@ -222,7 +222,8 @@
                         </svg>
                         Manajemen Meja
                     </a>
-                    <a wire:navigate href="#" class="nav-item {{ request()->routeIs('sales.*') ? 'active' : '' }}">
+                    <a wire:navigate href="{{ route('report.index') }}"
+                        class="nav-item {{ request()->routeIs('report.index*') ? 'active' : '' }}">
                         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
                             <line x1="18" y1="20" x2="18" y2="10" />

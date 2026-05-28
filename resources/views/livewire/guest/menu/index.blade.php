@@ -82,8 +82,11 @@
         <div style="max-width:480px;margin:0 auto;padding:16px">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
                 @forelse($menus as $menu)
-                    <div class="card-menu animate-fade-up" wire:click="openDetail({{ $menu->id }})"
-                        style="cursor:pointer">
+                    {{-- CEK APAKAH TERSEDIA ATAU HABIS UNTUK KLIK --}}
+                    <div class="card-menu animate-fade-up"
+                        @if ($menu->is_available) wire:click="openDetail({{ $menu->id }})" style="cursor:pointer"
+                @else 
+                    style="cursor:not-allowed; opacity:0.6; position:relative;" @endif>
 
                         {{-- Gambar --}}
                         <div style="aspect-ratio:4/3;overflow:hidden;background:var(--color-ink-700);position:relative">
@@ -91,13 +94,10 @@
                                 <img src="{{ Storage::url($menu->image) }}" alt="{{ $menu->name }}"
                                     style="width:100%;height:100%;object-fit:cover" loading="lazy">
                             @else
+                                {{-- SVG Default (biarkan sama seperti aslinya) --}}
                                 <div
                                     style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
-                                    <svg style="width:32px;height:32px;color:var(--color-ink-500)" fill="none"
-                                        stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
+                                    ...
                                 </div>
                             @endif
 
@@ -106,6 +106,15 @@
                                 style="font-size:9px">
                                 {{ $menu->category->name }}
                             </span>
+
+                            {{-- OVERLAY HABIS JIKA IS_AVAILABLE FALSE --}}
+                            @if (!$menu->is_available)
+                                <div
+                                    style="position:absolute; inset:0; background:rgba(18, 18, 20, 0.7); display:flex; align-items:center; justify-content:center; z-index:10;">
+                                    <span
+                                        style="color:#fff; font-family:var(--font-display); letter-spacing:2px; font-size:16px; border:2px solid var(--color-error); color:var(--color-error); padding:4px 8px; transform:rotate(-10deg);">HABIS</span>
+                                </div>
+                            @endif
                         </div>
 
                         {{-- Info --}}
@@ -120,7 +129,12 @@
                                     {{ $menu->description }}
                                 </p>
                             @endif
-                            <p class="price price-sm">Rp {{ number_format($menu->price, 0, ',', '.') }}</p>
+
+                            {{-- Ubah warna harga jika habis --}}
+                            <p class="price price-sm"
+                                style="{{ !$menu->is_available ? 'text-decoration: line-through; color:var(--color-ink-500);' : '' }}">
+                                Rp {{ number_format($menu->price, 0, ',', '.') }}
+                            </p>
                         </div>
                     </div>
                 @empty
