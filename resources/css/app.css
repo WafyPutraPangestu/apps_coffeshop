@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -10,8 +11,6 @@
    Vibe: Urban / Skate / Grafiti / Raw
    Tech: Laravel 13 + Livewire 4 + Tailwind CSS v4
    ===================================================== */
-
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 
 @theme {
     /* ---- Typography ---- */
@@ -105,10 +104,10 @@
     --shadow-lime: 3px 3px 0px #6b8a00;
     --shadow-orange: 3px 3px 0px #b84200;
 
-    --shadow-neon-lime: 0 0 10px rgba(190, 242, 0, 0.35),
-        0 0 28px rgba(190, 242, 0, 0.1);
-    --shadow-neon-orange: 0 0 10px rgba(240, 82, 0, 0.35),
-        0 0 28px rgba(240, 82, 0, 0.1);
+    --shadow-neon-lime:
+        0 0 10px rgba(190, 242, 0, 0.35), 0 0 28px rgba(190, 242, 0, 0.1);
+    --shadow-neon-orange:
+        0 0 10px rgba(240, 82, 0, 0.35), 0 0 28px rgba(240, 82, 0, 0.1);
 
     /* ── Transitions ── */
     --transition-snap: 100ms cubic-bezier(0.4, 0, 1, 1);
@@ -182,10 +181,10 @@ html.light {
     --shadow-lime: 3px 3px 0px #a8cc00;
     --shadow-orange: 3px 3px 0px #e06030;
 
-    --shadow-neon-lime: 0 0 10px rgba(100, 160, 0, 0.2),
-        0 0 24px rgba(100, 160, 0, 0.07);
-    --shadow-neon-orange: 0 0 10px rgba(224, 75, 0, 0.2),
-        0 0 24px rgba(224, 75, 0, 0.07);
+    --shadow-neon-lime:
+        0 0 10px rgba(100, 160, 0, 0.2), 0 0 24px rgba(100, 160, 0, 0.07);
+    --shadow-neon-orange:
+        0 0 10px rgba(224, 75, 0, 0.2), 0 0 24px rgba(224, 75, 0, 0.07);
 }
 /* body background juga override manual karena hardcoded */
 html.light body {
@@ -249,7 +248,8 @@ body {
 
 .text-drop-lime {
     color: var(--color-lime-500);
-    text-shadow: 2px 2px 0px var(--color-lime-700),
+    text-shadow:
+        2px 2px 0px var(--color-lime-700),
         4px 4px 0px rgba(0, 0, 0, 0.5);
 }
 
@@ -1473,7 +1473,9 @@ html:not(.light) {
         box-shadow: var(--shadow-orange);
     }
     50% {
-        box-shadow: 0 0 0 4px rgba(255, 92, 0, 0.15), var(--shadow-orange);
+        box-shadow:
+            0 0 0 4px rgba(255, 92, 0, 0.15),
+            var(--shadow-orange);
     }
 }
 
@@ -1597,7 +1599,9 @@ html:not(.light) {
 }
 
 #nprogress .peg {
-    box-shadow: 0 0 8px var(--color-lime-500), 0 0 4px var(--color-lime-500) !important;
+    box-shadow:
+        0 0 8px var(--color-lime-500),
+        0 0 4px var(--color-lime-500) !important;
 }
 
 #nprogress .spinner-icon {
@@ -1689,7 +1693,8 @@ html:not(.light) {
     justify-content: center;
     border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: border-color var(--transition-snap),
+    transition:
+        border-color var(--transition-snap),
         color var(--transition-snap);
     flex-shrink: 0;
 }
@@ -1751,7 +1756,9 @@ html:not(.light) {
     font-size: 13px;
     font-weight: 500;
     text-decoration: none;
-    transition: background var(--transition-base), color var(--transition-base);
+    transition:
+        background var(--transition-base),
+        color var(--transition-base);
     cursor: pointer;
     background: transparent;
     border: none;
@@ -1896,7 +1903,8 @@ html:not(.light) {
     justify-content: center;
     border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: border-color var(--transition-snap),
+    transition:
+        border-color var(--transition-snap),
         color var(--transition-snap);
     flex-shrink: 0;
 }
