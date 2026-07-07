@@ -269,7 +269,8 @@
                     });
                 }
             </script>
-        @endif
+        @endif <!-- Penutup IF tombol Midtrans -->
+
         {{-- ── PAYMENT STATUS BADGE ── --}}
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
             <span class="font-mono" style="font-size:11px;color:var(--color-ink-400)">Status Pembayaran</span>
@@ -284,6 +285,16 @@
                 {{ $paymentStatus }}
             </span>
         </div>
+
+        {{-- ── TOMBOL PESAN KEMBALI (Tampil jika sudah Paid) ── --}}
+        @if ($paymentStatus === 'Paid')
+            <div style="margin-bottom: 24px;">
+                <a href="{{ route('guest.menu.index', ['tableSlug' => $order->table->table_number]) }}" wire:navigate
+                    style="display:block; width:100%; text-align:center; padding:12px; background-color:var(--color-ink-800); color:#c4f34a; border: 1px solid #c4f34a; border-radius:8px; text-decoration:none; font-weight:bold; letter-spacing:1px;">
+                    + PESAN KEMBALI DI MEJA {{ $order->table->table_number }}
+                </a>
+            </div>
+        @endif
 
         {{-- ── INFO POLLING ── --}}
         <div style="text-align:center">
