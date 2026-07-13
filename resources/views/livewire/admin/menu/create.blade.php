@@ -85,6 +85,55 @@
             </div>
         </div>
 
+        {{-- Add-ons Section --}}
+        <div class="card-hard animate-fade-up" style="margin-top:20px;">
+
+            <div
+                style="display:flex; align-items:center; gap:8px; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--color-ink-700);">
+                <div style="width:6px; height:6px; background:var(--color-lime-500); border-radius:50%;"></div>
+                <span
+                    style="font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:var(--color-ink-400);">Add-ons
+                    Tersedia</span>
+            </div>
+
+            @if ($addOns->count() > 0)
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                    @foreach ($addOns as $addOn)
+                        <button type="button" wire:click="toggleAddOn({{ $addOn->id }})"
+                            style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:var(--radius-sm);border:1.5px solid {{ isset($selectedAddOns[$addOn->id]) ? 'var(--color-lime-500)' : 'var(--color-ink-600)' }};background:{{ isset($selectedAddOns[$addOn->id]) ? 'rgba(190,242,0,0.06)' : 'var(--color-ink-900)' }};cursor:pointer;transition:all 0.15s;width:100%">
+                            <div style="display:flex;align-items:center;gap:8px">
+                                <div
+                                    style="width:16px;height:16px;border-radius:3px;border:1.5px solid {{ isset($selectedAddOns[$addOn->id]) ? 'var(--color-lime-500)' : 'var(--color-ink-500)' }};background:{{ isset($selectedAddOns[$addOn->id]) ? 'var(--color-lime-500)' : 'transparent' }};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                                    @if (isset($selectedAddOns[$addOn->id]))
+                                        <svg style="width:10px;height:10px;color:var(--color-ink-950)" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                                d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    @endif
+                                </div>
+                                <span
+                                    style="font-size:13px;color:{{ isset($selectedAddOns[$addOn->id]) ? 'var(--color-lime-400)' : 'var(--color-ink-200)' }};font-weight:500">
+                                    {{ $addOn->name }}
+                                </span>
+                            </div>
+                            <span class="font-mono"
+                                style="font-size:12px;color:{{ isset($selectedAddOns[$addOn->id]) ? 'var(--color-lime-400)' : 'var(--color-ink-400)' }}">
+                                +Rp {{ number_format($addOn->price, 0, ',', '.') }}
+                            </span>
+                        </button>
+                    @endforeach
+                </div>
+                <span class="form-hint" style="margin-top:10px; display:block;">
+                    Pilih add-on yang bisa dipesan pelanggan untuk menu ini.
+                </span>
+            @else
+                <p class="font-mono" style="font-size:12px; color:var(--color-ink-500);">
+                    Belum ada add-on tersedia. Tambahkan add-on dulu di menu Add-ons.
+                </p>
+            @endif
+        </div>
+
         {{-- Kolom Kanan: Gambar + Status --}}
         <div style="display:flex; flex-direction:column; gap:16px;">
 

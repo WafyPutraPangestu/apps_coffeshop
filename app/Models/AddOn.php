@@ -16,4 +16,8 @@ class AddOn extends Model
     {
         return $this->hasMany(OrderItemAddon::class);
     }
+    public function menus()
+    {
+        return $this->belongsToMany(Menu::class, 'add_on_menu');
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Menu;
 
+use App\Models\AddOn;
 use App\Models\Category;
 use App\Models\Menu;
 use Livewire\Attributes\Layout;
@@ -24,9 +25,12 @@ class Edit extends Component
     public $image;
     public ?string $existingImage = null;
 
+    // ── Add-ons ──
+    public array $selectedAddOns = []; // [add_on_id => true/false]
+
     public function mount(int $id): void
     {
-        $menu = Menu::findOrFail($id);
+        $menu = Menu::with('addOns')->findOrFail($id);
 
         $this->menuId        = $menu->id;
         $this->name          = $menu->name;
@@ -35,6 +39,12 @@ class Edit extends Component
         $this->category_id   = (string) $menu->category_id;
         $this->is_available  = (bool) $menu->is_available;
         $this->existingImage = $menu->image;
+
+        // Pre-select add-on yang sudah ter-assign ke menu ini
+        $this->selectedAddOns = $menu->addOns
+            ->pluck('id')
+            ->mapWithKeys(fn($id) => [$id => true])
+            ->toArray();
     }
 
     protected function rules(): array
@@ -52,6 +62,16 @@ class Edit extends Component
     public function removeImage(): void
     {
         $this->existingImage = null;
+    }
+
+    // ── Toggle add-on checkbox ──
+    public function toggleAddOn(int $addOnId): void
+    {
+        if (isset($this->selectedAddOns[$addOnId])) {
+            unset($this->selectedAddOns[$addOnId]);
+        } else {
+            $this->selectedAddOns[$addOnId] = true;
+        }
     }
 
     public function save(): void
@@ -74,6 +94,9 @@ class Edit extends Component
             'image'        => $imagePath,
         ]);
 
+        // Sync ulang relasi add-on (otomatis tambah/hapus sesuai centang terbaru)
+        $menu->addOns()->sync(array_keys($this->selectedAddOns));
+
         $this->dispatch('toast', type: 'success', message: "Menu berhasil diperbarui.");
         $this->redirect(route('menu.index'), navigate: true);
     }
@@ -81,6 +104,8 @@ class Edit extends Component
     public function render()
     {
         $categories = Category::orderBy('name')->get();
-        return view('livewire.admin.menu.edit', compact('categories'));
+        $addOns     = AddOn::where('is_available', true)->orderBy('name')->get();
+
+        return view('livewire.admin.menu.edit', compact('categories', 'addOns'));
     }
 }

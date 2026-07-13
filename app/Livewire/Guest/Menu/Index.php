@@ -45,7 +45,7 @@ class Index extends Component
     {
         $this->tableSlug = $tableSlug;
 
-        $this->table = Table::where('qr_code_link', url("/order/{$tableSlug}"))->first();
+        $this->table = Table::query()->where('qr_code_link', url("/order/{$tableSlug}"))->first();
 
         $this->cart = session("cart_{$tableSlug}", []);
     }
@@ -53,7 +53,10 @@ class Index extends Component
     public function openDetail(int $menuId): void
     {
         $this->selectedMenu   = Menu::with('category')->findOrFail($menuId);
-        $this->temperature    = $this->selectedMenu->category->name === 'Snack' ? '' : 'Ice';
+
+        $isBeverage = $this->isBeverageCategory($this->selectedMenu->category->name);
+
+        $this->temperature    = $isBeverage ? 'Ice' : '';
         $this->ice_level      = 'Normal';
         $this->sugar_level    = 'Normal';
         $this->selectedAddons = [];
@@ -151,6 +154,89 @@ class Index extends Component
         }, $this->cart));
     }
 
+    protected function beverageKeywords(): array
+    {
+        return [
+            'coffee',
+            'kopi',
+            'non-coffee',
+            'non coffee',
+            'tea',
+            'teh',
+            'juice',
+            'jus',
+            'milk',
+            'susu',
+            'chocolate',
+            'coklat',
+            'cokelat',
+            'smoothie',
+            'boba',
+            'milkshake',
+            'shake',
+            'minuman',
+            'beverage',
+            'drink',
+            'soda',
+            'float',
+        ];
+    }
+
+    // ── Keyword whitelist untuk kategori snack (opsional, buat nanti) ──
+    protected function snackKeywords(): array
+    {
+        return [
+            'snack',
+            'cemilan',
+            'camilan',
+            'gorengan',
+            'kentang',
+            'fries',
+            'roti',
+            'toast',
+            'sandwich',
+        ];
+    }
+
+    // ── Cek apakah kategori termasuk minuman ──
+    protected function isBeverageCategory(?string $categoryName): bool
+    {
+        if (!$categoryName) return false;
+
+        $name = strtolower($categoryName);
+
+        foreach ($this->beverageKeywords() as $keyword) {
+            if (str_contains($name, $keyword)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // ── Cek apakah kategori termasuk snack ──
+    protected function isSnackCategory(?string $categoryName): bool
+    {
+        if (!$categoryName) return false;
+
+        $name = strtolower($categoryName);
+
+        foreach ($this->snackKeywords() as $keyword) {
+            if (str_contains($name, $keyword)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // ── Computed property biar bisa dipanggil di Blade ──
+    public function getIsBeverageProperty(): bool
+    {
+        if (!$this->selectedMenu) return false;
+        return $this->isBeverageCategory($this->selectedMenu->category->name);
+    }
+
     public function getCartCountProperty(): int
     {
         return array_sum(array_column($this->cart, 'quantity'));
@@ -216,18 +302,25 @@ class Index extends Component
         $this->redirect(route('guest.order.track', $order->order_code));
     }
 
+    public function getAvailableAddonsProperty()
+    {
+        if (!$this->selectedMenu) {
+            return collect();
+        }
+
+        return $this->selectedMenu->addOns()
+            ->where('is_available', true)
+            ->get();
+    }
     public function render()
     {
-        // Kategori menghitung menu yang masih aktif
         $categories = Category::withCount(['menus' => fn($q) => $q->where('is_active', true)])->get();
 
         $menus = Menu::with('category')
-            ->where('is_active', true) // UBAH INI: Tampilkan semua menu aktif (Termasuk yang Habis)
+            ->where('is_active', true)
             ->when($this->activeCategoryId, fn($q) => $q->where('category_id', $this->activeCategoryId))
             ->get();
 
-        $addons = AddOn::where('is_available', true)->get();
-
-        return view('livewire.guest.menu.index', compact('categories', 'menus', 'addons'));
+        return view('livewire.guest.menu.index', compact('categories', 'menus'));
     }
 }

@@ -30,4 +30,8 @@ class Menu extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+    public function addOns()
+    {
+        return $this->belongsToMany(AddOn::class, 'add_on_menu');
+    }
 }

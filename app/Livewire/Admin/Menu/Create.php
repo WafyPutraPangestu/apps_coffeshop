@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Menu;
 
+use App\Models\AddOn;
 use App\Models\Category;
 use App\Models\Menu;
 use Livewire\Attributes\Layout;
@@ -22,6 +23,9 @@ class Create extends Component
     public bool   $is_available = true;
     public $image;
 
+    // ── Add-ons ──
+    public array $selectedAddOns = []; // [add_on_id => true/false]
+
     protected function rules(): array
     {
         return [
@@ -34,6 +38,16 @@ class Create extends Component
         ];
     }
 
+    // ── Toggle add-on checkbox ──
+    public function toggleAddOn(int $addOnId): void
+    {
+        if (isset($this->selectedAddOns[$addOnId])) {
+            unset($this->selectedAddOns[$addOnId]);
+        } else {
+            $this->selectedAddOns[$addOnId] = true;
+        }
+    }
+
     public function save(): void
     {
         $this->validate();
@@ -43,7 +57,7 @@ class Create extends Component
             $imagePath = $this->image->store('menus', 'public');
         }
 
-        Menu::create([
+        $menu = Menu::create([
             'name'         => $this->name,
             'description'  => $this->description,
             'price'        => (int) $this->price,
@@ -52,6 +66,9 @@ class Create extends Component
             'image'        => $imagePath,
         ]);
 
+        // Simpan relasi add-on yang dipilih
+        $menu->addOns()->sync(array_keys($this->selectedAddOns));
+
         $this->dispatch('toast', type: 'success', message: "Menu \"{$this->name}\" berhasil ditambahkan.");
         $this->redirect(route('menu.index'), navigate: true);
     }
@@ -59,6 +76,8 @@ class Create extends Component
     public function render()
     {
         $categories = Category::orderBy('name')->get();
-        return view('livewire.admin.menu.create', compact('categories'));
+        $addOns     = AddOn::where('is_available', true)->orderBy('name')->get();
+
+        return view('livewire.admin.menu.create', compact('categories', 'addOns'));
     }
 }

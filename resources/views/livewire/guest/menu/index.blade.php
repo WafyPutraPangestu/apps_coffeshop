@@ -196,7 +196,7 @@
                     <hr class="divider">
 
                     {{-- Suhu (hanya kalau bukan Snack) --}}
-                    @if ($selectedMenu->category->name !== 'Snack')
+                    @if ($this->isBeverage)
                         <div style="margin-bottom:16px">
                             <p class="form-label" style="margin-bottom:8px">Suhu</p>
                             <div class="option-group">
@@ -239,11 +239,11 @@
                     @endif
 
                     {{-- Add-ons / Topping --}}
-                    @if ($addons->count() > 0)
+                    @if ($this->availableAddons->count() > 0)
                         <div style="margin-bottom:16px">
                             <p class="form-label" style="margin-bottom:8px">Topping Tambahan</p>
                             <div style="display:flex;flex-direction:column;gap:8px">
-                                @foreach ($addons as $addon)
+                                @foreach ($this->availableAddons as $addon)
                                     <button wire:click="toggleAddon({{ $addon->id }})"
                                         style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:var(--radius-sm);border:1.5px solid {{ isset($selectedAddons[$addon->id]) ? 'var(--color-lime-500)' : 'var(--color-ink-600)' }};background:{{ isset($selectedAddons[$addon->id]) ? 'rgba(190,242,0,0.06)' : 'var(--color-ink-900)' }};cursor:pointer;transition:all 0.15s;width:100%">
                                         <div style="display:flex;align-items:center;gap:8px">
