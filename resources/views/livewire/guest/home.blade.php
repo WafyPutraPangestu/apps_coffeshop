@@ -1,26 +1,7 @@
-{{--
-    =====================================================
-    WARSO COFFEE — ADMIN HOME
-    Livewire: App\Livewire\Guest\Home
-    Konteks: halaman ini hanya dilihat ADMIN/STAF, bukan pelanggan.
-    Isinya jadi overview sistem self-service ordering berbasis
-    QR Code + PWA yang berjalan di Warso Coffee (bukan halaman jualan).
-    =====================================================
---}}
-
 <div>
 
-    {{-- =====================================================
-         HERO — ringkasan sistem + toko.glb sebagai background
-         Catatan: hero ini SENGAJA dipaksa dark terus, terlepas dari
-         toggle light/dark situs — supaya visual 3D-nya selalu
-         punya kontras yang aman buat teks di atasnya.
-         ===================================================== --}}
-    <style>
-        .hero-toko {
-            background: #0a0a0a;
-        }
 
+    <style>
         .hero-toko .htxt-1 {
             color: rgba(255, 255, 255, 0.92) !important;
         }
@@ -45,26 +26,24 @@
         }
     </style>
 
-    <section x-data="{ tokoOpen: false }" class="hero-toko relative overflow-hidden px-4 pt-14 pb-16 sm:pt-20 sm:pb-24">
+    <section class="hero-toko relative px-4 pt-14 pb-16 sm:pt-20 sm:pb-24"
+        style="
+        background-image: url('{{ asset('storage/asset/toko.jpeg') }}');
+        
+        /* ATUR ZOOM DI SINI (vw = persentase lebar layar) */
+        /* Makin kecil angkanya (misal 30vw), gambar makin menjauh/zoom-out */
+        /* Makin besar angkanya (misal 80vw), gambar makin mendekat/zoom-in */
+        background-size: 100vw auto; 
+        
+        background-position: center top;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-color: #0a0a0a; /* Sisi kiri-kanan yang kosong akan berwarna gelap */
+    ">
 
-        {{-- BG LAYER — model 3D toko, murni dekoratif, tidak menangkap klik/scroll.
-             Di-mask supaya pinggirnya blend ke background, bukan kotak keras. --}}
-        <div class="absolute inset-0 z-0 pointer-events-none"
-            style="
-                -webkit-mask-image: radial-gradient(ellipse 75% 90% at 72% 45%, black 45%, transparent 85%);
-                mask-image: radial-gradient(ellipse 75% 90% at 72% 45%, black 45%, transparent 85%);
-             ">
-            <model-viewer src="{{ asset('storage/asset/toko.glb') }}" poster="{{ asset('storage/asset/logo.jpg') }}"
-                alt="" auto-rotate auto-rotate-delay="0" rotation-per-second="8deg" disable-zoom disable-pan
-                disable-tap shadow-intensity="0" environment-image="neutral" exposure="1"
-                camera-orbit="-18deg 80deg auto" field-of-view="24deg" interaction-prompt="none"
-                style="width:100%; height:100%; background: transparent;">
-            </model-viewer>
-        </div>
-
-        {{-- SCRIM — cukup di sisi teks saja, tipis & halus, biar nggak belang --}}
+        {{-- SCRIM — Overlay gradien gelap dari kiri ke kanan agar teks tetap kontras --}}
         <div class="absolute inset-0 z-[1] pointer-events-none"
-            style="background: linear-gradient(90deg, #0a0a0a 0%, rgba(10,10,10,0.92) 28%, rgba(10,10,10,0.55) 48%, rgba(10,10,10,0.1) 68%, transparent 82%);">
+            style="background: linear-gradient(90deg, #0a0a0a 0%, rgba(10,10,10,0.92) 30%, rgba(10,10,10,0.6) 60%, rgba(10,10,10,0.2) 100%);">
         </div>
 
         {{-- CONTENT --}}
@@ -108,32 +87,7 @@
 
                 <div class="flex flex-wrap gap-3 mt-7">
                     <a href="#menu" class="btn btn-primary btn-lg">Monitor Menu &amp; Stok</a>
-                    <button type="button" @click="tokoOpen = true" class="btn btn-lg btn-hero-outline">
-                        Puter Toko 360°
-                    </button>
                 </div>
-            </div>
-        </div>
-
-        {{-- MODAL — versi interaktif penuh dari model toko, dibuka dari tombol di atas --}}
-        <div x-cloak x-show="tokoOpen" @keydown.escape.window="tokoOpen = false" class="modal-backdrop"
-            style="z-index:100;" @click.self="tokoOpen = false">
-            <div class="modal modal-lg p-0 overflow-hidden">
-                <div class="flex items-center justify-between px-5 pt-5">
-                    <p class="modal-title" style="font-size:22px; margin-bottom:0;">Toko Warso Coffee</p>
-                    <button type="button" @click="tokoOpen = false" class="modal-close">✕</button>
-                </div>
-                <template x-if="tokoOpen">
-                    <model-viewer src="{{ asset('storage/asset/toko.glb') }}"
-                        poster="{{ asset('storage/asset/logo.jpg') }}" alt="Model 3D toko Warso Coffee" camera-controls
-                        auto-rotate shadow-intensity="1" exposure="0.95"
-                        style="width:100%; height:420px; background: var(--color-ink-900); margin-top:16px;">
-                    </model-viewer>
-                </template>
-                <p class="font-mono text-[11px] uppercase tracking-[0.1em] px-5 pb-5 pt-3"
-                    style="color:var(--color-ink-400);">
-                    Geser buat muter, scroll buat zoom.
-                </p>
             </div>
         </div>
     </section>
@@ -141,7 +95,7 @@
     {{-- =====================================================
          DASHBOARD RINGKAS — angka operasional hari ini
          ===================================================== --}}
-    <section class="px-4 py-10">
+    <section class="px-4 py-10 relative z-10 bg-black dark:bg-[#0a0a0a]">
         <div class="page-header">
             <h2 class="font-display" style="font-size:28px; color:var(--text-title);">
                 Ringkasan <span style="color:var(--color-lime-500);">Hari Ini</span>
@@ -172,7 +126,7 @@
     {{-- =====================================================
          PWA CALLOUT — ajakan install ke home screen
          ===================================================== --}}
-    <section class="px-4 pb-10" x-data="pwaInstall()">
+    <section class="px-4 pb-10 relative z-10 bg-black dark:bg-[#0a0a0a]" x-data="pwaInstall()">
         <div class="card-lime flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
             <div class="flex items-center gap-4">
                 <div class="w-12 h-12 rounded-md flex items-center justify-center flex-shrink-0"
@@ -200,7 +154,7 @@
     {{-- =====================================================
          KENAPA SISTEM INI DIBANGUN — feature highlight
          ===================================================== --}}
-    <section class="px-4 py-10">
+    <section class="px-4 py-10 relative z-10 bg-black dark:bg-[#0a0a0a]">
         <div class="page-header">
             <h2 class="font-display" style="font-size:28px; color:var(--text-title);">
                 Kenapa Pakai <span style="color:var(--color-lime-500);">Sistem Ini?</span>
@@ -255,7 +209,7 @@
     {{-- =====================================================
          ALUR PEMESANAN — how it works
          ===================================================== --}}
-    <section class="px-4 py-10">
+    <section class="px-4 py-10 relative z-10 bg-black dark:bg-[#0a0a0a]">
         <div class="page-header">
             <h2 class="font-display" style="font-size:28px; color:var(--text-title);">
                 Alur <span style="color:var(--color-lime-500);">Pemesanan</span>
@@ -307,7 +261,7 @@
     {{-- =====================================================
          MENU — monitor ketersediaan menu real-time
          ===================================================== --}}
-    <section id="menu" class="px-4 py-10">
+    <section id="menu" class="px-4 py-10 relative z-10 bg-black dark:bg-[#0a0a0a]">
         <div class="page-header">
             <h2 class="font-display" style="font-size:32px; color:var(--text-title);">
                 Monitor <span class="accent" style="color:var(--color-lime-500);">Menu &amp; Stok</span>
@@ -382,9 +336,6 @@
             </div>
         @endif
     </section>
-
-    {{-- model-viewer web component (untuk render 3D toko.glb) --}}
-    <script type="module" src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 
     {{-- Alpine component: tangkap event PWA install prompt dari browser --}}
     <script>
