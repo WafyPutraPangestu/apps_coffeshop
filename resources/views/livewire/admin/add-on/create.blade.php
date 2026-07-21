@@ -48,7 +48,7 @@
                 </label>
                 <div style="position:relative;">
                     <span
-                        style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:var(--font-mono);font-size:12px;color:var(--color-ink-400);pointer-events:none;">Rp</span>
+                        style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:var(--font-mono);font-size:12px;color:#fff;pointer-events:none;">Rp</span>
                     <input wire:model="price" type="number" min="0" step="500"
                         class="form-input {{ $errors->has('price') ? 'error' : '' }}" placeholder="5000"
                         style="padding-left:36px;">

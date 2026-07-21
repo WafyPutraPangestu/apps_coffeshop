@@ -27,7 +27,7 @@
                 <div style="display:flex; align-items:center; gap:8px;">
                     <div style="width:6px; height:6px; background:var(--color-orange-500); border-radius:50%;"></div>
                     <span
-                        style="font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:var(--color-ink-400);">Edit
+                        style="font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:#fff;">Edit
                         Data</span>
                 </div>
                 <span style="font-family:var(--font-mono); font-size:10px; color:var(--color-ink-600);">ID
@@ -66,7 +66,7 @@
                     <label class="form-label">Harga <span class="required">*</span></label>
                     <div style="position:relative;">
                         <span
-                            style="position:absolute; left:12px; top:50%; transform:translateY(-50%); font-family:var(--font-mono); font-size:12px; color:var(--color-ink-400); pointer-events:none;">Rp</span>
+                            style="position:absolute; left:12px; top:50%; transform:translateY(-50%); font-family:var(--font-mono); font-size:12px; color:#fff; pointer-events:none;">Rp</span>
                         <input wire:model="price" type="number" min="0"
                             class="form-input {{ $errors->has('price') ? 'error' : '' }}" placeholder="0"
                             style="padding-left:38px;" />
@@ -96,7 +96,7 @@
                 style="display:flex; align-items:center; gap:8px; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--color-ink-700);">
                 <div style="width:6px; height:6px; background:var(--color-lime-500); border-radius:50%;"></div>
                 <span
-                    style="font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:var(--color-ink-400);">Add-ons
+                    style="font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:#fff;">Add-ons
                     Tersedia</span>
             </div>
 
@@ -147,7 +147,7 @@
                     style="display:flex; align-items:center; gap:8px; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--color-ink-700);">
                     <div style="width:6px; height:6px; background:var(--color-orange-500); border-radius:50%;"></div>
                     <span
-                        style="font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:var(--color-ink-400);">Foto
+                        style="font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:#fff;">Foto
                         Menu</span>
                 </div>
 
@@ -220,7 +220,7 @@
                     style="display:flex; align-items:center; gap:8px; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--color-ink-700);">
                     <div style="width:6px; height:6px; background:var(--color-spray-cyan); border-radius:50%;"></div>
                     <span
-                        style="font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:var(--color-ink-400);">Status</span>
+                        style="font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:#fff;">Status</span>
                 </div>
                 <label class="toggle-wrapper">
                     <div class="toggle">

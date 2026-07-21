@@ -27,7 +27,7 @@
                 <div style="display:flex; align-items:center; gap:8px;">
                     <div style="width:6px; height:6px; background:var(--color-orange-500); border-radius:50%;"></div>
                     <span
-                        style="font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:var(--color-ink-400);">
+                        style="font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:#fff;">
                         Edit Data
                     </span>
                 </div>

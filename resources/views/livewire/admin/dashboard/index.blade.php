@@ -159,7 +159,7 @@
             <div class="page-header mb-0">
                 <div class="flex items-center gap-3 mb-1">
                     <span class="sticker sticker-lime text-xs">LIVE</span>
-                    <span class="font-mono text-xs" style="color:var(--color-ink-400); letter-spacing:0.12em;">WARSO
+                    <span class="font-mono text-xs" style="color:#fff; letter-spacing:0.12em;">WARSO
                         COFFEE</span>
                 </div>
                 <h1 class="page-title">
@@ -303,7 +303,7 @@
                         </svg>
                     </div>
                 </div>
-                <p class="font-mono" style="font-size:11px; color:var(--color-ink-400);">{{ $activeTables }} tables
+                <p class="font-mono" style="font-size:11px; color:#fff;">{{ $activeTables }} tables
                     registered</p>
             </div>
 
@@ -322,7 +322,7 @@
                             style="font-size:18px; letter-spacing:0.04em; color:var(--color-text-primary);">REVENUE
                             TREND</h3>
                         <p class="font-mono"
-                            style="font-size:10px; color:var(--color-ink-400); text-transform:uppercase; letter-spacing:0.1em; margin-top:2px;">
+                            style="font-size:10px; color:#fff; text-transform:uppercase; letter-spacing:0.1em; margin-top:2px;">
                             @if ($period === 'today')
                                 Today breakdown
                             @elseif($period === 'week')
@@ -352,7 +352,7 @@
                         style="font-size:18px; letter-spacing:0.04em; color:var(--color-text-primary);">BY CATEGORY
                     </h3>
                     <p class="font-mono"
-                        style="font-size:10px; color:var(--color-ink-400); text-transform:uppercase; letter-spacing:0.1em; margin-top:2px;">
+                        style="font-size:10px; color:#ffff; text-transform:uppercase; letter-spacing:0.1em; margin-top:2px;">
                         Revenue split</p>
                 </div>
                 <div style="height:220px; position:relative;">
@@ -369,7 +369,7 @@
         {{-- ════════════════════════════════════════ --}}
         {{-- SECOND ROW: HOURLY + PAYMENT --}}
         {{-- ════════════════════════════════════════ --}}
-        <div class="grid gap-4 mb-4" style="grid-template-columns: 1fr 1fr;">
+        <div class="grid gap-4 mb-4" style="grid-template-columns: 1fr;">
 
             {{-- Hourly Traffic --}}
             <div class="card" style="padding:20px;">
@@ -379,36 +379,17 @@
                             style="font-size:18px; letter-spacing:0.04em; color:var(--color-text-primary);">PEAK HOURS
                         </h3>
                         <p class="font-mono"
-                            style="font-size:10px; color:var(--color-ink-400); text-transform:uppercase; letter-spacing:0.1em; margin-top:2px;">
+                            style="font-size:10px; color:#fff; text-transform:uppercase; letter-spacing:0.1em; margin-top:2px;">
                             Order volume by hour</p>
                     </div>
-                    <span class="sticker sticker-orange" style="font-size:9px;">07:00 – 22:00</span>
+                    <span class="sticker sticker-orange" style="font-size:9px;">16:30 – 00:00</span>
                 </div>
                 <div style="height:180px; position:relative;">
                     <canvas id="hourlyChart" wire:ignore></canvas>
                 </div>
             </div>
 
-            {{-- Payment Methods --}}
-            <div class="card" style="padding:20px;">
-                <div class="flex items-center justify-between mb-4">
-                    <div>
-                        <h3 class="font-display"
-                            style="font-size:18px; letter-spacing:0.04em; color:var(--color-text-primary);">PAYMENT
-                            METHODS</h3>
-                        <p class="font-mono"
-                            style="font-size:10px; color:var(--color-ink-400); text-transform:uppercase; letter-spacing:0.1em; margin-top:2px;">
-                            Revenue by channel</p>
-                    </div>
-                </div>
-                <div style="height:180px; position:relative;">
-                    <canvas id="paymentChart" wire:ignore></canvas>
-                </div>
-                @if (empty($paymentMethodChart))
-                    <p class="font-mono text-center"
-                        style="font-size:11px; color:var(--color-ink-500); margin-top:12px;">No paid orders yet</p>
-                @endif
-            </div>
+
 
         </div>
 
@@ -452,8 +433,7 @@
                                         style="height:100%; width:{{ round(($menu['sold'] / $maxSold) * 100) }}%; background:{{ $i === 0 ? '#bef200' : ($i === 1 ? '#f05200' : 'var(--color-ink-500)') }}; border-radius:2px; transition:width 0.6s ease;">
                                     </div>
                                 </div>
-                                <p class="font-mono"
-                                    style="font-size:10px; color:var(--color-ink-400); margin-top:2px;">
+                                <p class="font-mono" style="font-size:10px; color:#fff; margin-top:2px;">
                                     Rp {{ number_format($menu['revenue'], 0, ',', '.') }}
                                 </p>
                             </div>
@@ -522,7 +502,7 @@
                                             </span>
                                         </td>
                                         <td><span class="font-mono"
-                                                style="font-size:10px; color:var(--color-ink-400);">{{ $order['created_at'] }}</span>
+                                                style="font-size:10px; color:#fff;">{{ $order['created_at'] }}</span>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -558,7 +538,7 @@
                             style="height:100%; width:{{ $item['pct'] }}%; background:{{ $item['color'] }}; border-radius:3px; transition:width 0.8s ease;">
                         </div>
                     </div>
-                    <p class="font-mono" style="font-size:10px; color:var(--color-ink-400); margin-top:5px;">
+                    <p class="font-mono" style="font-size:10px; color:#ffff; margin-top:5px;">
                         {{ $item['pct'] }}% of total orders</p>
                 </div>
             @endforeach
@@ -575,7 +555,7 @@
                             style="font-size:18px; letter-spacing:0.04em; color:var(--color-text-primary);">YEARLY
                             ARCHIVE</h3>
                         <p class="font-mono"
-                            style="font-size:10px; color:var(--color-ink-400); text-transform:uppercase; letter-spacing:0.1em; margin-top:2px;">
+                            style="font-size:10px; color:#fff; text-transform:uppercase; letter-spacing:0.1em; margin-top:2px;">
                             All-time revenue history</p>
                     </div>
                     <span class="badge badge-lime">{{ count($yearlyStats) }} year(s)</span>
@@ -599,7 +579,7 @@
                                     <td>
                                         <div class="flex items-center gap-2">
                                             <span class="font-display"
-                                                style="font-size:20px; {{ $ys['year'] == now()->year ? 'color:var(--color-lime-400)' : 'color:var(--color-ink-400)' }};">{{ $ys['year'] }}</span>
+                                                style="font-size:20px; {{ $ys['year'] == now()->year ? 'color:var(--color-lime-400)' : 'color:#fff' }};">{{ $ys['year'] }}</span>
                                             @if ($ys['year'] == now()->year)
                                                 <span class="sticker sticker-lime"
                                                     style="font-size:8px; padding:2px 6px;">NOW</span>
@@ -622,13 +602,13 @@
                                     </td>
                                     <td style="min-width:200px;">
                                         <div
-                                            style="height:6px; background:var(--color-ink-700); border-radius:3px; overflow:hidden; width:100%;">
+                                            style="height:6px; background:#fff; border-radius:3px; overflow:hidden; width:100%;">
                                             <div
                                                 style="height:100%; width:{{ round(($ys['revenue'] / $maxYearRevenue) * 100) }}%; background:{{ $ys['year'] == now()->year ? '#bef200' : 'var(--color-ink-500)' }}; border-radius:3px;">
                                             </div>
                                         </div>
                                         <span class="font-mono"
-                                            style="font-size:10px; color:var(--color-ink-500); margin-top:3px; display:block;">{{ round(($ys['revenue'] / $maxYearRevenue) * 100) }}%
+                                            style="font-size:10px; color:#fff; margin-top:3px; display:block;">{{ round(($ys['revenue'] / $maxYearRevenue) * 100) }}%
                                             of peak</span>
                                     </td>
                                 </tr>

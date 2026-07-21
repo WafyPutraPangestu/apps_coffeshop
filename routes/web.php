@@ -24,29 +24,37 @@ Route::get('/order/{tableSlug}', \App\Livewire\Guest\Menu\Index::class)->name('g
 Route::middleware('guest')->group(function () {
     Route::get('/login', Login::class)->name('login');
 });
+
 Route::middleware('auth')->group(function () {
-    Route::post('/logout', Sidebar::class . '@logout');
-    Route::get('/categories/index', Index::class)->name('categories.index');
-    Route::get('/categories/create', Create::class)->name('categories.create');
-    Route::get('/categories/{id}/edit', Edit::class)->name('categories.edit');
+    // Bisa diakses oleh siapapun yang sudah login (Admin maupun Kepala)
+    Route::post('/logout', App\Livewire\Components\Sidebar::class . '@logout')->name('logout');
 
-    Route::get('/menu/index', MenuIndex::class)->name('menu.index');
-    Route::get('/menu/create', MenuCreate::class)->name('menu.create');
-    Route::get('/menu/{id}/edit', MenuEdit::class)->name('menu.edit');
+    // === KHUSUS ADMIN (Fokus Operasional) ===
+    Route::middleware('can:admin')->group(function () {
+        Route::get('/categories/index', App\Livewire\Admin\Category\Index::class)->name('categories.index');
+        Route::get('/categories/create', App\Livewire\Admin\Category\Create::class)->name('categories.create');
+        Route::get('/categories/{id}/edit', App\Livewire\Admin\Category\Edit::class)->name('categories.edit');
 
-    Route::get('/add-on/index', \App\Livewire\Admin\AddOn\Index::class)->name('add-on.index');
-    Route::get('/add-on/create', \App\Livewire\Admin\AddOn\Create::class)->name('add-on.create');
-    Route::get('/add-on/{id}/edit', \App\Livewire\Admin\AddOn\Edit::class)->name('add-on.edit');
+        Route::get('/menu/index', App\Livewire\Admin\Menu\Index::class)->name('menu.index');
+        Route::get('/menu/create', App\Livewire\Admin\Menu\Create::class)->name('menu.create');
+        Route::get('/menu/{id}/edit', App\Livewire\Admin\Menu\Edit::class)->name('menu.edit');
 
-    Route::get('/dashboard/index', \App\Livewire\Admin\Dashboard\Index::class)->name('dashboard');
+        Route::get('/add-on/index', \App\Livewire\Admin\AddOn\Index::class)->name('add-on.index');
+        Route::get('/add-on/create', \App\Livewire\Admin\AddOn\Create::class)->name('add-on.create');
+        Route::get('/add-on/{id}/edit', \App\Livewire\Admin\AddOn\Edit::class)->name('add-on.edit');
 
-    Route::get('/orders/index', \App\Livewire\Admin\Orders\Index::class)->name('orders.index');
+        Route::get('/orders/index', \App\Livewire\Admin\Orders\Index::class)->name('orders.index');
 
-    Route::get('/meja/index', \App\Livewire\Admin\Meja\Index::class)->name('meja.index');
-    Route::get('/meja/create', \App\Livewire\Admin\Meja\Create::class)->name('meja.create');
-    Route::get('/meja/{id}/edit', \App\Livewire\Admin\Meja\Edit::class)->name('meja.edit');
+        Route::get('/meja/index', \App\Livewire\Admin\Meja\Index::class)->name('meja.index');
+        Route::get('/meja/create', \App\Livewire\Admin\Meja\Create::class)->name('meja.create');
+        Route::get('/meja/{id}/edit', \App\Livewire\Admin\Meja\Edit::class)->name('meja.edit');
 
-    Route::get('/riwayat/index', \App\Livewire\Admin\Riwayat\Index::class)->name('riwayat.index');
+        Route::get('/riwayat/index', \App\Livewire\Admin\Riwayat\Index::class)->name('riwayat.index');
+    });
 
-    Route::get('/report/index', \App\Livewire\Admin\Report\Index::class)->name('report.index');
+    // === KHUSUS KEPALA TOKO (Fokus Pantauan) ===
+    Route::middleware('can:kepala')->group(function () {
+        Route::get('/dashboard/index', \App\Livewire\Admin\Dashboard\Index::class)->name('dashboard');
+        Route::get('/report/index', \App\Livewire\Admin\Report\Index::class)->name('report.index');
+    });
 });

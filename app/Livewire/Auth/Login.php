@@ -29,9 +29,15 @@ class Login extends Component
 
         session()->regenerate();
 
-        $this->redirect('/dashboard/index', navigate: true);
+        // Cek role user yang sedang login
+        if (Auth::user()->role === 'kepala') {
+            // Jika Kepala Toko, arahkan ke Dashboard
+            $this->redirect(route('dashboard'), navigate: true);
+        } else {
+            // Jika Admin, arahkan ke Live Orders (operasional)
+            $this->redirect(route('orders.index'), navigate: true);
+        }
     }
-
     public function render()
     {
         return view('livewire.auth.login');

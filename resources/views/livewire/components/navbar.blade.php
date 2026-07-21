@@ -29,12 +29,7 @@
     {{-- Right Side: Theme Toggle + Login --}}
     <div class="flex items-center gap-4">
 
-        {{-- Theme Toggle --}}
-        <div style="padding: 8px;  ">
-            @livewire('components.theme-toggle')
-        </div>
-
-        {{-- Link ke Login --}}
+        
         <a wire:navigate href="/login" class="btn btn-primary btn-sm">
             Login
         </a>

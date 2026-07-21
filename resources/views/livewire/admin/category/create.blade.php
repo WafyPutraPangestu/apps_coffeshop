@@ -26,7 +26,7 @@
                 style="display:flex; align-items:center; gap:8px; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--color-ink-700);">
                 <div style="width:6px; height:6px; background:var(--color-lime-500); border-radius:50%;"></div>
                 <span
-                    style="font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:var(--color-ink-400);">
+                    style="font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:#fff;">
                     Data Kategori
                 </span>
             </div>

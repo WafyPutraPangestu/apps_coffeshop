@@ -32,8 +32,8 @@
     {{-- Search & Stats Row --}}
     <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-5">
         <div class="relative flex-1 w-full">
-            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style="color:var(--color-ink-400)"
-                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style="color:#fff" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0" />
             </svg>
@@ -65,7 +65,7 @@
                 @forelse ($tables as $table)
                     <tr class="stagger-{{ ($loop->index % 6) + 1 }} animate-fade-up">
                         <td>
-                            <span class="font-mono text-xs" style="color:var(--color-ink-400)">
+                            <span class="font-mono text-xs" style="color:#fff">
                                 {{ $tables->firstItem() + $loop->index }}
                             </span>
                         </td>
@@ -98,11 +98,11 @@
                                     {{ $table->qr_code_link }}
                                 </a>
                             @else
-                                <span style="color:var(--color-ink-400)" class="font-mono text-xs">—</span>
+                                <span style="color:#fff" class="font-mono text-xs">—</span>
                             @endif
                         </td>
                         <td>
-                            <span class="font-mono text-xs" style="color:var(--color-ink-400)">
+                            <span class="font-mono text-xs" style="color:#fff">
                                 {{ $table->created_at->format('d M Y') }}
                             </span>
                         </td>
@@ -149,7 +149,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                         d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                <p class="font-mono text-sm" style="color:var(--color-ink-400)">
+                                <p class="font-mono text-sm" style="color:#fff)">
                                     {{ $search ? 'Meja tidak ditemukan.' : 'Belum ada meja. Tambah sekarang!' }}
                                 </p>
                                 @if (!$search)

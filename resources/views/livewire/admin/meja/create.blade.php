@@ -80,7 +80,7 @@
                 <div class="text-center">
                     <p class="font-display text-2xl" style="color:var(--color-lime-400)"
                         x-text="'MEJA ' + tableNumber.toUpperCase()"></p>
-                    <p class="font-mono text-xs mt-1" style="color:var(--color-ink-400)">Scan untuk memesan</p>
+                    <p class="font-mono text-xs mt-1" style="color:#ffff">Scan untuk memesan</p>
                 </div>
 
                 <div class="table-indicator w-full justify-center">

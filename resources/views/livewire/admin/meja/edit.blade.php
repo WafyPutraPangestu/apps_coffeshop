@@ -34,7 +34,7 @@
         <div class="card-hard">
             <div class="flex items-center gap-2 mb-5">
                 <span class="sticker sticker-orange">EDIT MODE</span>
-                <span class="font-mono text-xs ml-auto" style="color:var(--color-ink-400)">
+                <span class="font-mono text-xs ml-auto" style="color:#ffff">
                     ID #{{ $tableModel->id }}
                 </span>
             </div>
@@ -99,7 +99,7 @@
                             <p class="font-display text-xl" style="color:var(--color-lime-400)">
                                 MEJA {{ strtoupper($tableModel->table_number) }}
                             </p>
-                            <p class="font-mono text-xs mt-1 break-all" style="color:var(--color-ink-400)">
+                            <p class="font-mono text-xs mt-1 break-all" style="#ffff">
                                 {{ $tableModel->qr_code_link }}
                             </p>
                         </div>
@@ -114,7 +114,7 @@
                             Download QR (300×300)
                         </a>
                     @else
-                        <p class="font-mono text-xs text-center py-4" style="color:var(--color-ink-400)">
+                        <p class="font-mono text-xs text-center py-4" style="color:#fff">
                             Belum ada QR Code.
                         </p>
                     @endif

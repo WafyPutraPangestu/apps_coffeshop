@@ -48,7 +48,7 @@
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px;">
         <div style="flex:1;min-width:220px;position:relative;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--color-ink-400);pointer-events:none;">
+                style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#fff;pointer-events:none;">
                 <circle cx="11" cy="11" r="8" />
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>

@@ -283,11 +283,16 @@ class Index extends Component
         $labels = [];
         $values = [];
 
-        for ($h = 7; $h <= 22; $h++) {
-            $labels[] = sprintf('%02d:00', $h);
+        for ($h = 16; $h <= 24; $h++) {
+
+            $dbHour = ($h === 24) ? 0 : $h;
+
+
+            $labels[] = ($h === 24) ? '00:00' : sprintf('%02d:30', $h);
+
             $values[] = Order::where('payment_status', 'Paid')
                 ->whereBetween('created_at', [$start, $end])
-                ->whereRaw('HOUR(created_at) = ?', [$h])
+                ->whereRaw('HOUR(created_at) = ?', [$dbHour])
                 ->count();
         }
 

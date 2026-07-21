@@ -39,8 +39,7 @@
                         <span class="badge-dot"></span>
                         LIVE
                     </span>
-                    <span class="font-mono text-xs"
-                        style="color:var(--color-ink-400); letter-spacing:0.12em;">AUTO-REFRESH 4S</span>
+                    <span class="font-mono text-xs" style="color:#fff; letter-spacing:0.12em;">AUTO-REFRESH 4S</span>
                 </div>
                 <h1 class="page-title">LIVE <span class="accent">ORDERS</span></h1>
                 <p class="page-subtitle">Pesanan yang sudah dibayar — siap diracik</p>
@@ -105,7 +104,7 @@
             </div>
             <div>
                 <p class="font-display" style="font-size:15px; letter-spacing:0.05em; color:#fff;">PESANAN BARU!</p>
-                <p class="font-mono" style="font-size:11px; color:var(--color-ink-400);">Segera diproses ☕</p>
+                <p class="font-mono" style="font-size:11px; color:#fff;">Segera diproses ☕</p>
             </div>
         </div>
 
@@ -164,7 +163,7 @@
                                         Meja {{ $order->table?->table_number ?? '?' }}
                                     </span>
                                 </div>
-                                <p class="font-mono" style="font-size:10px; color:var(--color-ink-400);">
+                                <p class="font-mono" style="font-size:10px; color:#fff;">
                                     {{ $order->created_at->format('H:i') }} —
                                     {{ $order->created_at->diffForHumans() }}
                                 </p>

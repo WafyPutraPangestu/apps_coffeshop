@@ -75,8 +75,7 @@
                                 <span class="badge badge-unavailable">Kosong</span>
                             @endif
                         </td>
-                        <td
-                            style="text-align:center; font-family:var(--font-mono); font-size:11px; color:var(--color-ink-400);">
+                        <td style="text-align:center; font-family:var(--font-mono); font-size:11px; color:#fff;">
                             {{ $category->created_at->format('d M Y') }}
                         </td>
                         <td>
