@@ -127,7 +127,7 @@
 
                 <div class="sidebar-header">
                     <div>
-                        <div class="sidebar-logo-mark">WARSO<span class="accent">. Coffe</span></div>
+                        <div class="sidebar-logo-mark">WARSO<span class="accent">. Coffee</span></div>
                         <div class="sidebar-logo-sub">WarungSlow </div>
                     </div>
                     {{-- Bell --}}
