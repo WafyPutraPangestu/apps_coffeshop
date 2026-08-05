@@ -24,7 +24,12 @@ class Create extends Component
     public $image;
 
     // ── Add-ons ──
-    public array $selectedAddOns = []; // [add_on_id => true/false]
+    public array  $selectedAddOns = []; // [add_on_id => true/false]
+
+    // ── Quick-Create Add-On ──
+    public bool   $showNewAddOnForm = false;
+    public string $newAddOnName     = '';
+    public string $newAddOnPrice    = '';
 
     protected function rules(): array
     {
@@ -46,6 +51,33 @@ class Create extends Component
         } else {
             $this->selectedAddOns[$addOnId] = true;
         }
+    }
+
+    // ── Quick-create add-on baru ──
+    public function saveNewAddOn(): void
+    {
+        $this->validate([
+            'newAddOnName'  => 'required|string|max:100',
+            'newAddOnPrice' => 'required|integer|min:0',
+        ], [], [
+            'newAddOnName'  => 'Nama Add-On',
+            'newAddOnPrice' => 'Harga Add-On',
+        ]);
+
+        $addon = AddOn::create([
+            'name'         => $this->newAddOnName,
+            'price'        => (int) $this->newAddOnPrice,
+            'is_available' => true,
+        ]);
+
+        // Otomatis dipilih setelah dibuat
+        $this->selectedAddOns[$addon->id] = true;
+
+        $this->newAddOnName     = '';
+        $this->newAddOnPrice    = '';
+        $this->showNewAddOnForm = false;
+
+        $this->dispatch('toast', type: 'success', message: "Add-On \"{$addon->name}\" berhasil ditambahkan dan dipilih.");
     }
 
     public function save(): void

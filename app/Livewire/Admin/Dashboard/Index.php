@@ -236,6 +236,8 @@ class Index extends Component
 
         // Yearly archive stats
         $this->yearlyStats = $this->buildYearlyStats();
+
+        $this->dispatch('stats-updated');
     }
 
     private function buildRevenueChart(Carbon $start, Carbon $end): array

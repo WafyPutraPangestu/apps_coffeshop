@@ -133,13 +133,15 @@
             @php
                 $maxRevenue = $dailyRevenue->max('revenue') ?: 1;
             @endphp
-            <div
-                style="display:flex; align-items:flex-end; gap:4px; height:120px; overflow-x:auto; padding-bottom:28px; position:relative;">
-                {{-- Garis horizontal --}}
-                <div style="position:absolute; top:0; left:0; right:0; border-top:1px dashed var(--color-ink-700);">
-                </div>
-                <div style="position:absolute; top:50%; left:0; right:0; border-top:1px dashed var(--color-ink-800);">
-                </div>
+            {{-- Wrapper untuk scroll horizontal --}}
+            <div style="overflow-x:auto; width:100%; padding-bottom:12px;">
+                <div
+                    style="display:flex; align-items:flex-end; gap:4px; height:140px; padding-bottom:32px; padding-left:8px; position:relative; min-width:100%; width:max-content;">
+                    {{-- Garis horizontal --}}
+                    <div style="position:absolute; top:0; left:0; right:0; border-top:1px dashed var(--color-ink-700);">
+                    </div>
+                    <div style="position:absolute; top:50%; left:0; right:0; border-top:1px dashed var(--color-ink-800);">
+                    </div>
 
                 @foreach ($dailyRevenue as $day)
                     @php $pct = ($day->revenue / $maxRevenue) * 100; @endphp
@@ -148,7 +150,8 @@
                         {{-- Tooltip on hover --}}
                         <div style="
                             position:absolute;
-                            bottom:calc({{ (int) $pct }}% + 28px);
+                            top:4px;
+                            left:4px;
                             background:var(--color-ink-700);
                             border:1px solid var(--color-ink-500);
                             border-radius:var(--radius-sm);
@@ -160,7 +163,7 @@
                             opacity:0;
                             transition:opacity 0.15s;
                             pointer-events:none;
-                            z-index:10;
+                            z-index:20;
                         "
                             class="bar-tooltip">
                             Rp {{ number_format($day->revenue, 0, ',', '.') }}<br />
@@ -173,11 +176,12 @@
                         </div>
                         {{-- Label tanggal --}}
                         <div
-                            style="position:absolute; bottom:-22px; font-family:var(--font-mono); font-size:8px; color:var(--color-ink-500); white-space:nowrap; transform:rotate(-45deg); transform-origin:top left; left:50%;">
+                            style="position:absolute; bottom:-32px; font-family:var(--font-mono); font-size:8px; color:var(--color-ink-500); white-space:nowrap; transform:rotate(-45deg); transform-origin:top left; left:50%;">
                             {{ \Carbon\Carbon::parse($day->date)->format('d/m') }}
                         </div>
                     </div>
                 @endforeach
+                </div>
             </div>
         </div>
     @endif

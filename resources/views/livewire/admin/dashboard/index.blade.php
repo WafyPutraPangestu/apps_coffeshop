@@ -1,8 +1,4 @@
 <div x-data="{
-    revenueChart: null,
-    hourlyChart: null,
-    categoryChart: null,
-    paymentChart: null,
     initCharts() {
         this.$nextTick(() => {
             this.buildRevenueChart();
@@ -14,10 +10,10 @@
     buildRevenueChart() {
         const ctx = document.getElementById('revenueChart');
         if (!ctx) return;
-        if (this.revenueChart) this.revenueChart.destroy();
-        const labels = @js($revenueChart['labels'] ?? []);
-        const values = @js($revenueChart['values'] ?? []);
-        this.revenueChart = new Chart(ctx, {
+        if (ctx.chart) ctx.chart.destroy();
+        const labels = Array.from($wire.revenueChart ? $wire.revenueChart.labels : []);
+        const values = Array.from($wire.revenueChart ? $wire.revenueChart.values : []);
+        ctx.chart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels,
@@ -57,10 +53,10 @@
     buildHourlyChart() {
         const ctx = document.getElementById('hourlyChart');
         if (!ctx) return;
-        if (this.hourlyChart) this.hourlyChart.destroy();
-        const labels = @js($hourlyChart['labels'] ?? []);
-        const values = @js($hourlyChart['values'] ?? []);
-        this.hourlyChart = new Chart(ctx, {
+        if (ctx.chart) ctx.chart.destroy();
+        const labels = Array.from($wire.hourlyChart ? $wire.hourlyChart.labels : []);
+        const values = Array.from($wire.hourlyChart ? $wire.hourlyChart.values : []);
+        ctx.chart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels,
@@ -90,11 +86,11 @@
     buildCategoryChart() {
         const ctx = document.getElementById('categoryChart');
         if (!ctx) return;
-        if (this.categoryChart) this.categoryChart.destroy();
-        const data = @js($categoryRevenue);
+        if (ctx.chart) ctx.chart.destroy();
+        const data = $wire.categoryRevenue || [];
         const labels = data.map(d => d.name);
         const values = data.map(d => d.revenue);
-        this.categoryChart = new Chart(ctx, {
+        ctx.chart = new Chart(ctx, {
             type: 'doughnut',
             data: {
                 labels,
@@ -119,11 +115,11 @@
     buildPaymentChart() {
         const ctx = document.getElementById('paymentChart');
         if (!ctx) return;
-        if (this.paymentChart) this.paymentChart.destroy();
-        const data = @js($paymentMethodChart);
+        if (ctx.chart) ctx.chart.destroy();
+        const data = $wire.paymentMethodChart || [];
         const labels = data.map(d => d.method || 'Unknown');
         const values = data.map(d => d.revenue);
-        this.paymentChart = new Chart(ctx, {
+        ctx.chart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels,
@@ -147,7 +143,7 @@
         });
     }
 }" x-init="initCharts()"
-    wire:key="dashboard-{{ $period }}-{{ $selectedYear }}-{{ $selectedMonth }}" @stats-updated.window="initCharts()"
+    @stats-updated.window="initCharts()"
     class="min-h-screen">
     {{-- ════════════════════════════════════════ --}}
     {{-- PAGE HEADER --}}
@@ -340,8 +336,7 @@
                     </span>
                 </div>
                 <div style="height:220px; position:relative;">
-                    <canvas id="revenueChart" wire:ignore
-                        x-effect="$wire.on('stats-updated', () => buildRevenueChart())"></canvas>
+                    <canvas id="revenueChart" wire:ignore></canvas>
                 </div>
             </div>
 
@@ -448,7 +443,9 @@
                     <h3 class="font-display"
                         style="font-size:18px; letter-spacing:0.04em; color:var(--color-text-primary);">RECENT ORDERS
                     </h3>
-                    <a href="{{ route('orders.index') ?? '#' }}" class="btn btn-xs btn-secondary">VIEW ALL</a>
+                    @can('admin')
+                        <a href="{{ route('orders.index') ?? '#' }}" class="btn btn-xs btn-secondary">VIEW ALL</a>
+                    @endcan
                 </div>
 
                 @if (empty($recentOrders))

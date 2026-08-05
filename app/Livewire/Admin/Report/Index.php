@@ -97,12 +97,39 @@ class Index extends Component
         ];
 
         // Chart data: pendapatan per hari dalam range
-        $dailyRevenue = (clone $base)
+        $dailyRevenueDb = (clone $base)
             ->where('payment_status', 'Paid')
             ->selectRaw('DATE(created_at) as date, SUM(total_price) as revenue, COUNT(*) as orders')
             ->groupBy('date')
             ->orderBy('date')
-            ->get();
+            ->get()
+            ->keyBy('date');
+
+        $dailyRevenue = collect();
+        if ($this->startDate && $this->endDate) {
+            $start = \Carbon\Carbon::parse($this->startDate);
+            $end = \Carbon\Carbon::parse($this->endDate);
+            
+            // Generate kalender penuh (maksimal 366 hari untuk mencegah overload)
+            if ($start->diffInDays($end) <= 366) {
+                for ($d = $start->copy(); $d->lte($end); $d->addDay()) {
+                    $dateStr = $d->format('Y-m-d');
+                    if ($dailyRevenueDb->has($dateStr)) {
+                        $dailyRevenue->push($dailyRevenueDb->get($dateStr));
+                    } else {
+                        $dailyRevenue->push((object)[
+                            'date' => $dateStr,
+                            'revenue' => 0,
+                            'orders' => 0
+                        ]);
+                    }
+                }
+            } else {
+                $dailyRevenue = $dailyRevenueDb->values();
+            }
+        } else {
+            $dailyRevenue = $dailyRevenueDb->values();
+        }
 
         return view('livewire.admin.report.index', compact('orders', 'stats', 'dailyRevenue'));
     }
