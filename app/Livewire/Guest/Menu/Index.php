@@ -271,6 +271,15 @@ class Index extends Component
                 'price'       => $itemPrice,
                 'notes'       => $item['notes'] ?: null,
             ]);
+            
+            // Kurangi stok menu
+            $menu = Menu::find($item['menu_id']);
+            if ($menu && $menu->stock >= $item['quantity']) {
+                $menu->decrement('stock', $item['quantity']);
+            } elseif ($menu) {
+                // Jika stok ternyata tidak cukup, set stok jadi 0 saja
+                $menu->update(['stock' => 0]);
+            }
 
             foreach ($item['addons'] as $addon) {
                 OrderItemAddon::create([

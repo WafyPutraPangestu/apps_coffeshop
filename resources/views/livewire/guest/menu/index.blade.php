@@ -84,7 +84,7 @@
                 @forelse($menus as $menu)
                     {{-- CEK APAKAH TERSEDIA ATAU HABIS UNTUK KLIK --}}
                     <div class="card-menu animate-fade-up"
-                        @if ($menu->is_available) wire:click="openDetail({{ $menu->id }})" style="cursor:pointer"
+                        @if ($menu->is_available && $menu->stock > 0) wire:click="openDetail({{ $menu->id }})" style="cursor:pointer"
                 @else 
                     style="cursor:not-allowed; opacity:0.6; position:relative;" @endif>
 
@@ -107,8 +107,8 @@
                                 {{ $menu->category->name }}
                             </span>
 
-                            {{-- OVERLAY HABIS JIKA IS_AVAILABLE FALSE --}}
-                            @if (!$menu->is_available)
+                            {{-- OVERLAY HABIS JIKA IS_AVAILABLE FALSE ATAU STOK 0 --}}
+                            @if (!$menu->is_available || $menu->stock <= 0)
                                 <div
                                     style="position:absolute; inset:0; background:rgba(18, 18, 20, 0.7); display:flex; align-items:center; justify-content:center; z-index:10;">
                                     <span
@@ -132,7 +132,7 @@
 
                             {{-- Ubah warna harga jika habis --}}
                             <p class="price price-sm"
-                                style="{{ !$menu->is_available ? 'text-decoration: line-through; color:var(--color-ink-500);' : '' }}">
+                                style="{{ (!$menu->is_available || $menu->stock <= 0) ? 'text-decoration: line-through; color:var(--color-ink-500);' : '' }}">
                                 Rp {{ number_format($menu->price, 0, ',', '.') }}
                             </p>
                         </div>

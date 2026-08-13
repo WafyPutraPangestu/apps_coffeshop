@@ -160,6 +160,7 @@
                         <th>Menu</th>
                         <th>Kategori</th>
                         <th style="text-align:right;">Harga</th>
+                        <th style="text-align:right;">Stok</th>
                         <th style="text-align:center;">Status</th>
                         <th style="text-align:center; width:80px;">Tersedia</th>
                         <th style="text-align:right; width:90px;">Aksi</th>
@@ -207,8 +208,27 @@
                             <td style="text-align:right;">
                                 <span class="price price-sm">Rp {{ number_format($menu->price, 0, ',', '.') }}</span>
                             </td>
+                            <td style="text-align:right;">
+                                @if($editingStockId === $menu->id)
+                                    <div style="display:flex; align-items:center; justify-content:flex-end; gap:4px;">
+                                        <input type="number" wire:model="editingStockValue" class="form-input" style="width:60px; padding:4px 8px; text-align:right; font-size:12px; min-height:28px;" min="0" wire:keydown.enter="saveStock({{ $menu->id }})" wire:keydown.escape="cancelEditStock">
+                                        <button wire:click="saveStock({{ $menu->id }})" class="btn btn-primary btn-icon" style="width:28px; height:28px; padding:0;">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </button>
+                                        <button wire:click="cancelEditStock" class="btn btn-secondary btn-icon" style="width:28px; height:28px; padding:0;">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                        </button>
+                                    </div>
+                                    @error('editingStockValue') <span style="font-size:10px; color:var(--color-error); display:block; margin-top:2px;">Invalid</span> @enderror
+                                @else
+                                    <div style="cursor:pointer; display:inline-flex; align-items:center; gap:6px; padding:4px 8px; border-radius:4px; transition:background 0.2s;" wire:click="startEditStock({{ $menu->id }}, {{ $menu->stock }})" title="Klik untuk edit stok" onmouseover="this.style.background='var(--color-ink-800)'" onmouseout="this.style.background='transparent'">
+                                        <span style="font-family:var(--font-mono); font-weight:600; color: {{ $menu->stock > 0 ? 'var(--color-ink-100)' : 'var(--color-error)' }}; font-size:13px;">{{ $menu->stock }}</span>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--color-ink-500)" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                    </div>
+                                @endif
+                            </td>
                             <td style="text-align:center;">
-                                @if ($menu->is_available)
+                                @if ($menu->is_available && $menu->stock > 0)
                                     <span class="badge badge-available">
                                         <span class="badge-dot" style="background:var(--color-success);"></span>
                                         Tersedia

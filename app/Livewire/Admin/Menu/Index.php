@@ -24,6 +24,10 @@ class Index extends Component
     public string $filterCategory = '';
     public string $filterStatus   = '';
     public bool   $showArchived   = false;
+    
+    // ── Inline Edit Stock ──────────────────────────────────────
+    public ?int $editingStockId = null;
+    public string $editingStockValue = '';
 
     // ── Add-On state ───────────────────────────────────────────
     public string $addonSearch       = '';
@@ -81,6 +85,32 @@ class Index extends Component
         $menu = Menu::findOrFail($id);
         $menu->update(['is_active' => true]);
         $this->dispatch('toast', type: 'success', message: "Menu \"{$menu->name}\" berhasil dikembalikan ke katalog.");
+    }
+    
+    // ── Edit Stok Cepat ─────────────────────────────────────────
+    public function startEditStock(int $id, int $currentStock): void
+    {
+        $this->editingStockId = $id;
+        $this->editingStockValue = (string) $currentStock;
+    }
+
+    public function cancelEditStock(): void
+    {
+        $this->editingStockId = null;
+        $this->editingStockValue = '';
+    }
+
+    public function saveStock(int $id): void
+    {
+        $this->validate([
+            'editingStockValue' => 'required|integer|min:0'
+        ]);
+
+        $menu = Menu::findOrFail($id);
+        $menu->update(['stock' => (int) $this->editingStockValue]);
+        
+        $this->cancelEditStock();
+        $this->dispatch('toast', type: 'success', message: "Stok \"{$menu->name}\" berhasil diperbarui.");
     }
 
     // ── Add-On actions ─────────────────────────────────────────

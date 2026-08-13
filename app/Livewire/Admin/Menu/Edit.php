@@ -20,6 +20,7 @@ class Edit extends Component
     public string $name        = '';
     public string $description = '';
     public string $price       = '';
+    public string $stock       = '';
     public string $category_id = '';
     public bool   $is_available = true;
     public $image;
@@ -36,6 +37,7 @@ class Edit extends Component
         $this->name          = $menu->name;
         $this->description   = $menu->description ?? '';
         $this->price         = (string) $menu->price;
+        $this->stock         = (string) $menu->stock;
         $this->category_id   = (string) $menu->category_id;
         $this->is_available  = (bool) $menu->is_available;
         $this->existingImage = $menu->image;
@@ -53,6 +55,7 @@ class Edit extends Component
             'name'        => 'required|string|max:100',
             'description' => 'nullable|string|max:500',
             'price'       => 'required|integer|min:0',
+            'stock'       => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
             'is_available' => 'boolean',
             'image'       => 'nullable|image|max:2048',
@@ -89,6 +92,7 @@ class Edit extends Component
             'name'         => $this->name,
             'description'  => $this->description,
             'price'        => (int) $this->price,
+            'stock'        => (int) $this->stock,
             'category_id'  => $this->category_id,
             'is_available' => $this->is_available,
             'image'        => $imagePath,

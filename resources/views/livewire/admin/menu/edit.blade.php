@@ -76,6 +76,16 @@
                     @enderror
                 </div>
 
+                {{-- Stok --}}
+                <div class="form-group">
+                    <label class="form-label">Stok <span class="required">*</span></label>
+                    <input wire:model="stock" type="number" min="0"
+                        class="form-input {{ $errors->has('stock') ? 'error' : '' }}" placeholder="0" />
+                    @error('stock')
+                        <span class="form-error">{{ $message }}</span>
+                    @enderror
+                </div>
+
                 {{-- Deskripsi --}}
                 <div class="form-group">
                     <label class="form-label">Deskripsi</label>

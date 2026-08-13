@@ -17,6 +17,7 @@ class Menu extends Model
         'image',
         'is_available',
         'is_active',
+        'stock',
     ];
 
     // Relasi: Menu ini milik satu kategori

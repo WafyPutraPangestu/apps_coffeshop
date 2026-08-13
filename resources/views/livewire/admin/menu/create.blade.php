@@ -72,6 +72,17 @@
                     @enderror
                 </div>
 
+                {{-- Stok --}}
+                <div class="form-group">
+                    <label class="form-label">Stok Awal <span class="required">*</span></label>
+                    <input wire:model="stock" type="number" min="0"
+                        class="form-input {{ $errors->has('stock') ? 'error' : '' }}" placeholder="cth: 50" />
+                    @error('stock')
+                        <span class="form-error">{{ $message }}</span>
+                    @enderror
+                    <span class="form-hint" style="margin-top:6px; display:block;">Isi 0 jika barang sedang kosong.</span>
+                </div>
+
                 {{-- Deskripsi --}}
                 <div class="form-group">
                     <label class="form-label">Deskripsi</label>

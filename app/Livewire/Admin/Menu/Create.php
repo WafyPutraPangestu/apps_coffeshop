@@ -19,6 +19,7 @@ class Create extends Component
     public string $name        = '';
     public string $description = '';
     public string $price       = '';
+    public string $stock       = '0';
     public string $category_id = '';
     public bool   $is_available = true;
     public $image;
@@ -37,6 +38,7 @@ class Create extends Component
             'name'        => 'required|string|max:100',
             'description' => 'nullable|string|max:500',
             'price'       => 'required|integer|min:0',
+            'stock'       => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
             'is_available' => 'boolean',
             'image'       => 'nullable|image|max:2048',
@@ -93,6 +95,7 @@ class Create extends Component
             'name'         => $this->name,
             'description'  => $this->description,
             'price'        => (int) $this->price,
+            'stock'        => (int) $this->stock,
             'category_id'  => $this->category_id,
             'is_available' => $this->is_available,
             'image'        => $imagePath,
